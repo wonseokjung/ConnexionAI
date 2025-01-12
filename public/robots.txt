@@ -1,3 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Sitemap: https://connexionai.com/sitemap.xml
+
+# Block specific directories
+Disallow: /private/
+Disallow: /admin/
+Disallow: /temp/
