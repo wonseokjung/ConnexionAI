@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Container, Typography, Grid, Paper, Tabs, Tab, Button } from '@mui/material';
+import { Box, Container, Typography, Grid, Paper, Tabs, Tab } from '@mui/material';
 import { motion } from 'framer-motion';
-import DownloadIcon from '@mui/icons-material/Download';
 
 const Blog = () => {
   const [currentTab, setCurrentTab] = useState(0);
 
   const handleTabChange = (event, newValue) => {
     setCurrentTab(newValue);
-  };
-
-  const handleDownload = () => {
-    window.open('/assets/prompt.pdf', '_blank');
   };
 
   const posts = {
@@ -83,42 +78,6 @@ const Blog = () => {
           <Typography variant="h3" gutterBottom sx={{ mb: 6, fontWeight: 600 }}>
             Blog
           </Typography>
-
-          <Paper
-            sx={{
-              p: 4,
-              mb: 6,
-              background: 'linear-gradient(45deg, #000 30%, #333 90%)',
-              color: 'white',
-            }}
-          >
-            <Grid container spacing={4} alignItems="center">
-              <Grid item xs={12} md={8}>
-                <Typography variant="h4" gutterBottom sx={{ fontWeight: 600 }}>
-                  프롬프트 엔지니어링 가이드
-                </Typography>
-                <Typography variant="subtitle1" paragraph>
-                  AI와 효과적으로 소통하는 방법을 배워보세요. 실전에서 바로 활용할 수 있는 프롬프트 작성 기법과 
-                  다양한 사례를 통해 AI의 잠재력을 최대한 끌어내는 방법을 소개합니다.
-                </Typography>
-                <Button
-                  variant="contained"
-                  size="large"
-                  onClick={handleDownload}
-                  startIcon={<DownloadIcon />}
-                  sx={{
-                    bgcolor: 'white',
-                    color: 'black',
-                    '&:hover': {
-                      bgcolor: '#f0f0f0',
-                    },
-                  }}
-                >
-                  무료 다운로드
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
 
           <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 6 }}>
             <Tabs 
