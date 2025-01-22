@@ -1,21 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-
-import Home from './pages/Home';
-import About from './pages/About';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Landing from './pages/Landing';
 import Blog from './pages/Blog';
+import About from './pages/About';
 
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
-      main: '#000000',
+      main: '#ffffff',
     },
     secondary: {
-      main: '#ffffff',
+      main: '#000000',
+    },
+    background: {
+      default: '#000000',
+      paper: '#1a1a1a',
     },
   },
   typography: {
@@ -46,9 +50,22 @@ const theme = createTheme({
 
 const Navigation = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isLandingPage = location.pathname === '/';
+
+  if (isLandingPage) return null;
 
   return (
-    <AppBar position="fixed" color="secondary" elevation={0} sx={{ borderBottom: '1px solid #eaeaea' }}>
+    <AppBar 
+      position="fixed" 
+      color="transparent" 
+      elevation={0}
+      sx={{ 
+        background: 'rgba(0, 0, 0, 0.5)',
+        backdropFilter: 'blur(10px)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+      }}
+    >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Button 
           color="primary" 
@@ -58,7 +75,7 @@ const Navigation = () => {
             fontWeight: 700,
             '&:hover': {
               backgroundColor: 'transparent',
-              color: '#666'
+              opacity: 0.8
             }
           }}
         >
@@ -80,10 +97,17 @@ const Navigation = () => {
             Blog
           </Button>
           <Button 
-            variant="contained" 
+            variant="outlined" 
             color="primary"
             onClick={() => navigate('/contact')}
-            sx={{ ml: 2 }}
+            sx={{ 
+              ml: 2,
+              borderColor: 'rgba(255, 255, 255, 0.3)',
+              '&:hover': {
+                borderColor: 'rgba(255, 255, 255, 0.8)',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)'
+              }
+            }}
           >
             무료 상담
           </Button>
@@ -93,22 +117,21 @@ const Navigation = () => {
   );
 };
 
-const App = () => {
+function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
         <Navigation />
-        <Box sx={{ pt: 8 }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/blog" element={<Blog />} />
-          </Routes>
-        </Box>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </Router>
     </ThemeProvider>
   );
-};
+}
 
 export default App;
