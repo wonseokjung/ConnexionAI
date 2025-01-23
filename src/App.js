@@ -4,9 +4,9 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Landing from './pages/Landing';
-import Blog from './pages/Blog';
+import Home from './pages/Home';
 import About from './pages/About';
+import Blog from './pages/Blog';
 
 const theme = createTheme({
   palette: {
@@ -124,10 +124,10 @@ function App() {
       <Router>
         <Navigation />
         <Routes>
-          <Route path="/" element={<Landing />} />
+          <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
     </ThemeProvider>
