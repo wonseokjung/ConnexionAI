@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Blog from './pages/Blog';
+import MarketingService from './pages/Marketing';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 const theme = createTheme({
   palette: {
@@ -91,6 +93,13 @@ const Navigation = () => {
           </Button>
           <Button 
             color="primary" 
+            onClick={() => navigate('/marketing')}
+            sx={{ mx: 1 }}
+          >
+            Marketing
+          </Button>
+          <Button 
+            color="primary" 
             onClick={() => navigate('/blog')}
             sx={{ mx: 1 }}
           >
@@ -99,7 +108,7 @@ const Navigation = () => {
           <Button 
             variant="outlined" 
             color="primary"
-            onClick={() => navigate('/contact')}
+            onClick={() => window.location.href = 'mailto:jay@connexionai.kr'}
             sx={{ 
               ml: 2,
               borderColor: 'rgba(255, 255, 255, 0.3)',
@@ -127,6 +136,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/marketing" element={<MarketingService />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </Router>
