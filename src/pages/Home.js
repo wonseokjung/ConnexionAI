@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, useRef, useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -9,13 +9,19 @@ import {
   AppBar,
   Toolbar,
   Fade,
-  useScrollTrigger
+  useScrollTrigger,
+  IconButton
 } from '@mui/material';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation, useScroll, useTransform } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useNavigate } from 'react-router-dom';
 import { GiArtificialIntelligence } from "react-icons/gi";
-import { MdAutorenew, MdIntegrationInstructions } from "react-icons/md";
+import { MdAutorenew, MdIntegrationInstructions, MdGroups, MdContentPaste } from "react-icons/md";
+import { FaYoutube, FaChartLine, FaRobot, FaLinkedin, FaTwitter, FaInstagram, FaTiktok, FaLightbulb } from 'react-icons/fa';
+import { BsGraphUp, BsMegaphone, BsLightningCharge } from 'react-icons/bs';
+import CountUp from 'react-countup';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, Environment, Float, Text3D } from '@react-three/drei';
 
 // Brand colors
 const BRAND_COLORS = {
@@ -58,17 +64,8 @@ const WaveDivider = ({ flip }) => {
 };
 
 /* ===========================================
-   Navigation Bar - 스크롤 시 숨김/보임
+   Navigation Bar
 =========================================== */
-function HideOnScroll({ children }) {
-  const trigger = useScrollTrigger();
-  return (
-    <Fade in={!trigger}>
-      <Box>{children}</Box>
-    </Fade>
-  );
-}
-
 const NavigationBar = () => {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
@@ -83,432 +80,724 @@ const NavigationBar = () => {
   }, []);
 
   return (
-    <HideOnScroll>
-      <AppBar
-        position="fixed"
-        elevation={0}
-        sx={{
-          background: scrolled ? 'rgba(16,16,42,0.9)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(10px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(255,255,255,0.1)' : 'none',
-          transition: 'all 0.3s ease-in-out',
-        }}
-      >
-        <Container maxWidth="lg">
-          <Toolbar sx={{ justifyContent: 'space-between' }}>
-            <Typography
-              variant="h6"
-              sx={{
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 700,
-                cursor: 'pointer',
-                color: '#ffffff',
-                textShadow: '0 0 10px rgba(128, 242, 215, 0.3)',
-              }}
-              onClick={() => navigate('/')}
-            >
-              ConnexionAI
-            </Typography>
-            <Box sx={{ display: 'flex', gap: 4 }}>
-              {['Home', 'About', 'Blog'].map((item) => (
-                <Typography
-                  key={item}
-                  onClick={() =>
-                    navigate(item === 'Home' ? '/' : `/${item.toLowerCase()}`)
-                  }
-                  sx={{
-                    color: 'rgba(255,255,255,0.7)',
-                    fontFamily: 'Montserrat, sans-serif',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    '&:hover': {
-                      color: '#ffffff',
-                      '&::after': {
-                        width: '100%',
-                      },
-                    },
-                    '&::after': {
-                      content: '""',
-                      position: 'absolute',
-                      bottom: -2,
-                      left: 0,
-                      width: 0,
-                      height: '2px',
-                      backgroundColor: '#80f2d7',
-                      transition: 'width 0.3s ease-in-out',
-                    },
-                  }}
-                >
-                  {item}
-                </Typography>
-              ))}
-            </Box>
-            <Button
-              variant="outlined"
-              size="small"
-              sx={{
-                color: '#ffffff',
-                borderColor: 'rgba(255,255,255,0.3)',
-                fontFamily: 'Montserrat, sans-serif',
-                '&:hover': {
-                  borderColor: '#80f2d7',
-                  backgroundColor: 'rgba(128, 242, 215, 0.1)',
-                },
-              }}
-            >
-              Contact
-            </Button>
-          </Toolbar>
-        </Container>
-      </AppBar>
-    </HideOnScroll>
-  );
-};
-
-/* ===========================================
-   Hero: 메인 타입라이터 텍스트
-=========================================== */
-const TypewriterText = ({ text }) => {
-  const [displayText, setDisplayText] = useState('');
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-
-  useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= text.length) {
-        setDisplayText(text.substring(0, currentIndex));
-        currentIndex++;
-      } else {
-        setIsTypingComplete(true);
-        clearInterval(typingInterval);
-      }
-    }, 100); // 타이핑 속도
-
-    return () => clearInterval(typingInterval);
-  }, [text]);
-
-  return (
-    <Box sx={{ position: 'relative', display: 'inline-block' }}>
-      <Typography
-        variant="h1"
-        component="span"
-        sx={{
-          fontSize: { xs: '3rem', md: '5rem' },
-          fontWeight: 700,
-          color: '#ffffff',
-          fontFamily: 'Montserrat, sans-serif',
-          textShadow: '0 0 20px rgba(128, 242, 215, 0.3)',
-          letterSpacing: '0.02em',
-          lineHeight: 1.2,
-          position: 'relative',
-          whiteSpace: 'nowrap',
-          '@keyframes blink': {
-            '0%, 100%': { opacity: 1 },
-            '50%': { opacity: 0 },
-          },
-          '&::after': {
-            content: '""',
-            position: 'absolute',
-            right: '-1rem',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            width: '3px',
-            height: '70%',
-            backgroundColor: '#80f2d7',
-            animation: 'blink 1s step-end infinite',
-          },
-        }}
-      >
-        {displayText}
-      </Typography>
-      {!isTypingComplete && (
-        <Box
-          component="span"
-          sx={{
-            display: 'inline-block',
-            width: '3px',
-            height: '70%',
-            backgroundColor: '#80f2d7',
-            verticalAlign: 'middle',
-            animation: 'blink 1s step-end infinite',
-            ml: 1,
-          }}
-        />
-      )}
-    </Box>
-  );
-};
-
-/* ===========================================
-   Hero: 서브 타입라이터 텍스트
-=========================================== */
-const TypewriterDescription = ({ text }) => {
-  const [displayText, setDisplayText] = useState('');
-
-  useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= text.length) {
-        setDisplayText(text.substring(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 50);
-
-    return () => clearInterval(typingInterval);
-  }, [text]);
-
-  return (
-    <Typography
-      variant="h2"
+    <AppBar
+      position="fixed"
+      elevation={0}
       sx={{
-        fontSize: { xs: '1.5rem', md: '2rem' },
-        fontWeight: 400,
-        color: 'rgba(255,255,255,0.9)',
-        mb: 4,
-        fontFamily: 'Montserrat, sans-serif',
-        maxWidth: '800px',
-        letterSpacing: '0.02em',
-        lineHeight: 1.5,
+        background: scrolled ? 'rgba(16,16,42,0.9)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(10px)' : 'none',
+        borderBottom: scrolled ? '1px solid rgba(255,255,255,0.1)' : 'none',
+        transition: 'all 0.3s ease-in-out',
       }}
     >
-      {displayText}
-    </Typography>
+      <Container maxWidth="lg">
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          <Typography
+            variant="h6"
+            sx={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontWeight: 700,
+              cursor: 'pointer',
+              color: '#ffffff',
+              textShadow: '0 0 10px rgba(128, 242, 215, 0.3)',
+            }}
+            onClick={() => navigate('/')}
+          >
+            ConnexionAI
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 4 }}>
+            {['Home', 'About', 'Blog'].map((item) => (
+              <Typography
+                key={item}
+                onClick={() =>
+                  navigate(item === 'Home' ? '/' : `/${item.toLowerCase()}`)
+                }
+                sx={{
+                  color: 'rgba(255,255,255,0.7)',
+                  fontFamily: 'Montserrat, sans-serif',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  '&:hover': {
+                    color: '#ffffff',
+                    '&::after': {
+                      width: '100%',
+                    },
+                  },
+                  '&::after': {
+                    content: '""',
+                    position: 'absolute',
+                    bottom: -2,
+                    left: 0,
+                    width: 0,
+                    height: '2px',
+                    backgroundColor: '#80f2d7',
+                    transition: 'width 0.3s ease-in-out',
+                  },
+                }}
+              >
+                {item}
+              </Typography>
+            ))}
+          </Box>
+          <Button
+            variant="outlined"
+            size="small"
+            sx={{
+              color: '#ffffff',
+              borderColor: 'rgba(255,255,255,0.3)',
+              fontFamily: 'Montserrat, sans-serif',
+              '&:hover': {
+                borderColor: '#80f2d7',
+                backgroundColor: 'rgba(128, 242, 215, 0.1)',
+              },
+            }}
+          >
+            Contact
+          </Button>
+        </Toolbar>
+      </Container>
+    </AppBar>
   );
 };
 
 /* ===========================================
-   Parallax Section
+   3D Logo Component
 =========================================== */
-const ParallaxSection = ({ image, children }) => {
+const Logo3D = () => {
+  const meshRef = useRef();
+
+  useFrame((state) => {
+    meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime) * 0.2;
+    meshRef.current.rotation.x = Math.cos(state.clock.elapsedTime) * 0.2;
+  });
+
   return (
-    <Box
-      sx={{
-        position: 'relative',
-        background: `url(${image}) center/cover no-repeat`,
-        minHeight: '60vh',
+    <mesh ref={meshRef}>
+      <Text3D
+        font="/fonts/helvetiker_regular.typeface.json"
+        size={1.5}
+        height={0.2}
+        curveSegments={12}
+        bevelEnabled
+        bevelThickness={0.02}
+        bevelSize={0.02}
+        bevelOffset={0}
+        bevelSegments={5}
+      >
+        ConnexionAI
+        <meshStandardMaterial 
+          color={BRAND_COLORS.teal}
+          metalness={0.8}
+          roughness={0.2}
+        />
+      </Text3D>
+    </mesh>
+  );
+};
+
+/* ===========================================
+   3D Scene Component
+=========================================== */
+const Scene3D = () => {
+  return (
+    <Canvas
+      camera={{ position: [0, 0, 10], fov: 50 }}
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
         width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+      }}
+    >
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} intensity={1} />
+      <Suspense fallback={null}>
+        <Float
+          speed={3}
+          rotationIntensity={0.5}
+          floatIntensity={2}
+        >
+          <Logo3D />
+        </Float>
+        <Environment preset="city" />
+      </Suspense>
+      <OrbitControls 
+        enableZoom={false}
+        enablePan={false}
+        enableRotate={false}
+      />
+    </Canvas>
+  );
+};
+
+/* ===========================================
+   Hero Section with Animated Text
+=========================================== */
+const HeroSection = () => {
+  return (
+    <Box 
+      sx={{ 
+        position: 'relative', 
+        height: '100vh', 
+        overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        overflow: 'hidden',
-        '&::before': {
-          content: '""',
+        background: `linear-gradient(135deg, ${BRAND_COLORS.navy} 0%, ${BRAND_COLORS.navyLight} 100%)`,
+      }}
+    >
+      <Container maxWidth="lg">
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            textAlign: 'center',
+            color: '#fff',
+            position: 'relative',
+            zIndex: 2,
+          }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <Typography
+              variant="h1"
+              sx={{
+                fontSize: { xs: '2.5rem', md: '4.5rem' },
+                fontWeight: 700,
+                mb: 2,
+                background: 'linear-gradient(45deg, #64ffda 30%, #2196F3 90%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                textShadow: '0 0 20px rgba(100, 255, 218, 0.3)',
+                fontFamily: 'Montserrat, sans-serif',
+                position: 'relative',
+                '&::after': {
+                  content: '""',
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                  background: 'linear-gradient(45deg, rgba(100, 255, 218, 0.2), rgba(33, 150, 243, 0.2))',
+                  filter: 'blur(20px)',
+                  zIndex: -1,
+                }
+              }}
+            >
+              ConnexionAI
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+          >
+            <Typography
+              variant="h2"
+              sx={{
+                fontSize: { xs: '1.5rem', md: '2.5rem' },
+                fontWeight: 300,
+                mb: 4,
+                color: 'rgba(255,255,255,0.9)',
+                fontFamily: 'Montserrat, sans-serif',
+              }}
+            >
+              AI 전문가와 크리에이터의 만남<br />
+              데이터 기반 콘텐츠 마케팅의 혁신
+            </Typography>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+          >
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center', mb: 6 }}>
+              {['#AI마케팅전문가', '#크리에이터협업', '#데이터기반성장'].map((tag, index) => (
+                <motion.div
+                  key={tag}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                >
+                  <Typography
+                    sx={{
+                      color: BRAND_COLORS.teal,
+                      fontSize: { xs: '1rem', md: '1.2rem' },
+                      fontFamily: 'Montserrat, sans-serif',
+                      padding: '4px 12px',
+                      borderRadius: '20px',
+                      background: 'rgba(100, 255, 218, 0.1)',
+                      backdropFilter: 'blur(10px)',
+                    }}
+                  >
+                    {tag}
+                  </Typography>
+                </motion.div>
+              ))}
+            </Box>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button
+              variant="contained"
+              size="large"
+              onClick={() => window.location.href = 'mailto:contact@connexionai.kr'}
+              sx={{
+                px: 6,
+                py: 2,
+                fontSize: '1.2rem',
+                fontWeight: 500,
+                background: 'linear-gradient(45deg, #64ffda 30%, #2196F3 90%)',
+                boxShadow: '0 3px 15px rgba(100, 255, 218, 0.3)',
+                fontFamily: 'Montserrat, sans-serif',
+                '&:hover': {
+                  background: 'linear-gradient(45deg, #2196F3 30%, #64ffda 90%)',
+                },
+              }}
+            >
+              무료 상담 받기
+            </Button>
+          </motion.div>
+        </Box>
+      </Container>
+      
+      {/* Animated background elements */}
+      <Box
+        sx={{
           position: 'absolute',
           top: 0,
           left: 0,
-          bottom: 0,
           right: 0,
-          backgroundColor: 'rgba(0,0,0,0.5)', // 어두운 오버레이
+          bottom: 0,
+          overflow: 'hidden',
           zIndex: 1,
-        }
-      }}
-    >
-      <motion.div
-        style={{
-          position: 'absolute',
-          top: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: 0,
-        }}
-        initial={{ backgroundPositionY: '0%' }}
-        whileInView={{ backgroundPositionY: '15%' }}
-        transition={{ duration: 1, ease: 'easeInOut' }}
-      />
-      <Box
-        sx={{
-          position: 'relative',
-          zIndex: 2,
-          textAlign: 'center',
-          color: '#fff',
-          p: 4,
         }}
       >
-        {children}
+        {[...Array(3)].map((_, index) => (
+          <motion.div
+            key={index}
+            style={{
+              position: 'absolute',
+              width: '40vw',
+              height: '40vw',
+              borderRadius: '50%',
+              background: `radial-gradient(circle, ${BRAND_COLORS.teal}${index * 2}0 0%, transparent 70%)`,
+              filter: 'blur(60px)',
+              top: `${30 + index * 20}%`,
+              left: `${20 + index * 20}%`,
+            }}
+            animate={{
+              x: ['-20%', '20%', '-20%'],
+              y: ['-20%', '20%', '-20%'],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: 15 + index * 2,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          />
+        ))}
       </Box>
     </Box>
   );
 };
 
 /* ===========================================
-   Service Card
+   Stats Section
 =========================================== */
-const ServiceCard = ({ title, description, icon }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 30 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5 }}
-    viewport={{ once: true }}
-    whileHover={{
-      y: -10,
-      scale: 1.02,
-      transition: { duration: 0.2 },
+const StatsSection = () => (
+  <Box sx={{ py: 10, position: 'relative' }}>
+    <Container maxWidth="lg">
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={3}>
+          <StatsCard
+            icon={<MdGroups />}
+            value={200}
+            label="파트너 크리에이터"
+            suffix="+"
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <StatsCard
+            icon={<BsGraphUp />}
+            value={500}
+            label="평균 조회수 증가율"
+            suffix="%"
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <StatsCard
+            icon={<FaLightbulb />}
+            value={50}
+            label="AI 모델 개발"
+            suffix="+"
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <StatsCard
+            icon={<BsLightningCharge />}
+            value={1000}
+            label="자동화 작업 처리"
+            suffix="K+"
+          />
+        </Grid>
+      </Grid>
+    </Container>
+  </Box>
+);
+
+/* ===========================================
+   Stats Card Component
+=========================================== */
+const StatsCard = ({ icon, value, label, suffix = '' }) => (
+  <Paper
+    elevation={0}
+    sx={{
+      p: 4,
+      height: '100%',
+      background: 'rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(10px)',
+      borderRadius: '20px',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      textAlign: 'center',
+      transition: 'all 0.3s ease-in-out',
+      '&:hover': {
+        transform: 'translateY(-5px)',
+        background: 'rgba(255, 255, 255, 0.08)',
+      },
     }}
-    style={{ width: '100%' }}
+  >
+    <Box
+      sx={{
+        color: BRAND_COLORS.teal,
+        fontSize: '2.5rem',
+        mb: 2,
+        display: 'flex',
+        justifyContent: 'center',
+      }}
+    >
+      {icon}
+    </Box>
+    <Typography
+      variant="h3"
+      sx={{
+        fontWeight: 700,
+        color: 'white',
+        mb: 1,
+        fontFamily: 'Montserrat, sans-serif',
+      }}
+    >
+      <CountUp end={value} duration={2.5} />{suffix}
+    </Typography>
+    <Typography
+      sx={{
+        color: BRAND_COLORS.slate,
+        fontFamily: 'Montserrat, sans-serif',
+      }}
+    >
+      {label}
+    </Typography>
+  </Paper>
+);
+
+/* ===========================================
+   Services Section
+=========================================== */
+const ServicesSection = () => (
+  <Box sx={{ py: 10, position: 'relative' }}>
+    <Container maxWidth="lg">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
+      >
+        <Typography
+          variant="h2"
+          sx={{
+            textAlign: 'center',
+            mb: 2,
+            fontSize: { xs: '2rem', md: '3rem' },
+            fontWeight: 700,
+            background: 'linear-gradient(45deg, #64ffda 30%, #2196F3 90%)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontFamily: 'Montserrat, sans-serif',
+          }}
+        >
+          AI 기반 콘텐츠 마케팅
+        </Typography>
+        <Typography
+          sx={{
+            textAlign: 'center',
+            mb: 6,
+            color: BRAND_COLORS.slate,
+            fontSize: { xs: '1rem', md: '1.2rem' },
+            fontFamily: 'Montserrat, sans-serif',
+          }}
+        >
+          AI 전문가와 크리에이터의 협업으로 만드는 차별화된 마케팅 솔루션
+        </Typography>
+      </motion.div>
+
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={4}>
+          <ServiceCard
+            icon={<FaYoutube style={{ fontSize: '2.5rem' }} />}
+            title="AI 기반 콘텐츠 전략"
+            description="AI 트렌드 분석과 크리에이터의 전문성이 만나 최적의 콘텐츠를 제작합니다."
+            features={[
+              "AI 트렌드 분석 및 예측",
+              "맞춤형 콘텐츠 기획",
+              "크리에이터 매칭",
+              "성과 데이터 분석"
+            ]}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <ServiceCard
+            icon={<FaChartLine style={{ fontSize: '2.5rem' }} />}
+            title="데이터 기반 성장 전략"
+            description="빅데이터 분석으로 타겟 오디언스를 정확히 파악하고 효과적인 전략을 수립합니다."
+            features={[
+              "오디언스 분석",
+              "실시간 성과 측정",
+              "AI 기반 최적화",
+              "ROI 분석 리포트"
+            ]}
+          />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <ServiceCard
+            icon={<MdAutorenew style={{ fontSize: '2.5rem' }} />}
+            title="자동화 마케팅 솔루션"
+            description="AI 자동화 시스템으로 마케팅 효율을 극대화합니다."
+            features={[
+              "포스팅 자동화",
+              "인게이지먼트 최적화",
+              "크로스 플랫폼 관리",
+              "성과 자동 리포팅"
+            ]}
+          />
+        </Grid>
+      </Grid>
+    </Container>
+  </Box>
+);
+
+const ServiceCard = ({ icon, title, description, features }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+    viewport={{ once: true }}
   >
     <Paper
       elevation={0}
       sx={{
         p: 4,
         height: '100%',
-        background: `linear-gradient(135deg, ${BRAND_COLORS.navyLight} 0%, ${BRAND_COLORS.navy} 100%)`,
+        background: 'rgba(255, 255, 255, 0.05)',
         backdropFilter: 'blur(10px)',
-        borderRadius: '15px',
-        border: `1px solid rgba(100, 255, 218, 0.1)`,
+        borderRadius: '20px',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
         transition: 'all 0.3s ease-in-out',
         '&:hover': {
-          background: `linear-gradient(135deg, ${BRAND_COLORS.navy} 0%, ${BRAND_COLORS.navyLight} 100%)`,
-          border: `1px solid ${BRAND_COLORS.teal}`,
-          boxShadow: `0 0 25px rgba(100, 255, 218, 0.15)`,
+          transform: 'translateY(-5px)',
+          background: 'rgba(255, 255, 255, 0.08)',
         },
       }}
     >
-      <motion.div
-        whileHover={{
-          scale: 1.15,
-          rotate: 3,
-          transition: { duration: 0.2 }
-        }}
-      >
-        <Box
-          sx={{
-            color: BRAND_COLORS.teal,
-            mb: 2,
-            fontSize: '3rem',
-            display: 'flex',
-            justifyContent: 'center',
-            filter: 'drop-shadow(0 0 8px rgba(100, 255, 218, 0.4))'
-          }}
-        >
-          {icon}
-        </Box>
-      </motion.div>
+      <Box sx={{ color: BRAND_COLORS.teal, mb: 2 }}>
+        {icon}
+      </Box>
       <Typography
         variant="h5"
         sx={{
-          fontWeight: 600,
-          color: BRAND_COLORS.white,
+          color: 'white',
           mb: 2,
+          fontWeight: 600,
           fontFamily: 'Montserrat, sans-serif',
-          textAlign: 'center'
         }}
       >
         {title}
       </Typography>
-      <Typography sx={{ color: BRAND_COLORS.slate, textAlign: 'center' }}>
+      <Typography
+        sx={{
+          color: BRAND_COLORS.slate,
+          mb: 3,
+          fontFamily: 'Montserrat, sans-serif',
+        }}
+      >
         {description}
       </Typography>
+      <Box component="ul" sx={{ color: BRAND_COLORS.slate, pl: 3 }}>
+        {features.map((feature, index) => (
+          <Box
+            component="li"
+            key={index}
+            sx={{
+              mb: 1,
+              fontFamily: 'Montserrat, sans-serif',
+            }}
+          >
+            {feature}
+          </Box>
+        ))}
+      </Box>
     </Paper>
   </motion.div>
 );
 
 /* ===========================================
-   "Since 2019" - Neon Flicker Text
+   Features Section
 =========================================== */
-const NeonFlickerText = ({ text }) => {
-  return (
-    <Box
-      sx={{
-        position: 'relative',
-        display: 'inline-block',
-        color: BRAND_COLORS.teal,
-        fontWeight: 700,
-        fontFamily: 'Montserrat, sans-serif',
-        fontSize: { xs: '1.8rem', md: '2.5rem' },
-        textShadow: '0 0 6px rgba(100, 255, 218, 0.5)',
-        '@keyframes neonFlicker': {
-          '0%': { opacity: 1 },
-          '5%': { opacity: 0.5 },
-          '10%': { opacity: 1 },
-          '15%': { opacity: 0.4 },
-          '20%': { opacity: 1 },
-          '22%': { opacity: 0.8 },
-          '25%': { opacity: 1 },
-          '30%': { opacity: 0.4 },
-          '35%': { opacity: 1 },
-          '100%': { opacity: 1 },
-        },
-        animation: 'neonFlicker 2.5s infinite',
-      }}
+const FeaturesSection = () => (
+  <Box sx={{ py: 10, position: 'relative' }}>
+    <Container maxWidth="lg">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        viewport={{ once: true }}
       >
-        {text}
-    </Box>
-  );
-};
-
-/* ===========================================
-   인공지능 교육 섹션 (EducationSection)
-   - 단일 블록만 Intersection Observer로 나타남
-=========================================== */
-const EducationSection = () => {
-  const controls = useAnimation();
-  const [ref, inView] = useInView({
-    threshold: 0.2,
-    triggerOnce: true
-  });
-
-  useEffect(() => {
-    if (inView) {
-      controls.start('visible');
-    }
-  }, [controls, inView]);
-
-  return (
-    <Box
-      ref={ref}
-      sx={{
-        py: 10,
-        background: `linear-gradient(135deg, ${BRAND_COLORS.navyLight} 0%, ${BRAND_COLORS.navy} 100%)`,
-      }}
-    >
-      <Container maxWidth="md">
-        <motion.div
-          initial="hidden"
-          animate={controls}
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.8 },
-            },
+        <Typography
+          variant="h2"
+          sx={{
+            textAlign: 'center',
+            mb: 2,
+            fontSize: { xs: '2rem', md: '3rem' },
+            fontWeight: 700,
+            background: 'linear-gradient(45deg, #64ffda 30%, #2196F3 90%)',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            fontFamily: 'Montserrat, sans-serif',
           }}
         >
-          <Typography
-            variant="h3"
-            sx={{
-              fontWeight: 600,
-              color: BRAND_COLORS.white,
-              mb: 4,
-              textAlign: 'center',
-              fontFamily: 'Montserrat, sans-serif',
-            }}
-          >
-            인공지능 기업 교육
-          </Typography>
-          <Typography
-            sx={{
-              color: BRAND_COLORS.slate,
-              textAlign: 'center',
-              fontFamily: 'Montserrat, sans-serif',
-              maxWidth: '700px',
-              mx: 'auto',
-              lineHeight: 1.6,
-              fontSize: '1.1rem',
-            }}
-          >
-            현업에서 바로 활용 가능한 AI 실무지식을 제공하는 <strong>ConnexionAI</strong>의 기업 맞춤형 교육 프로그램을 만나보세요.
-            <br />
-            비즈니스 니즈에 맞춰 설계된 커리큘럼으로 구성되며,  
-            실무 프로젝트와 사례 중심으로 운영되어 더욱 빠르게 핵심 기술을 습득할 수 있습니다.
-          </Typography>
-        </motion.div>
-      </Container>
-    </Box>
-  );
-};
+          AI + Creator Collaboration
+        </Typography>
+        <Typography
+          sx={{
+            textAlign: 'center',
+            mb: 6,
+            color: BRAND_COLORS.slate,
+            fontSize: { xs: '1rem', md: '1.2rem' },
+            fontFamily: 'Montserrat, sans-serif',
+          }}
+        >
+          AI 기술력과 크리에이터의 창의성이 만나 새로운 마케팅 패러다임을 만듭니다
+        </Typography>
+      </motion.div>
+
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <FeatureCard
+            icon={<FaRobot />}
+            title="최신 AI 기술 전문성"
+            description="GPT-4, DALL-E 3, Stable Diffusion 등 최신 AI 모델을 활용한 콘텐츠 제작과 마케팅 자동화 시스템 구축"
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <FeatureCard
+            icon={<MdGroups />}
+            title="크리에이터 네트워크"
+            description="200+ 검증된 크리에이터 파트너십을 통한 전문적인 콘텐츠 제작 및 마케팅 캠페인 진행"
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <FeatureCard
+            icon={<FaChartLine />}
+            title="데이터 기반 의사결정"
+            description="AI 기반 데이터 분석으로 트렌드를 예측하고, 실시간 성과 측정을 통한 최적화 전략 수립"
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <FeatureCard
+            icon={<BsLightningCharge />}
+            title="빠른 실행과 검증"
+            description="AI 자동화 시스템으로 아이디어 검증부터 실행까지 빠르고 정확한 마케팅 프로세스 구현"
+          />
+        </Grid>
+      </Grid>
+    </Container>
+  </Box>
+);
+
+const FeatureCard = ({ icon, title, description }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8 }}
+    viewport={{ once: true }}
+  >
+    <Paper
+      elevation={0}
+      sx={{
+        p: 4,
+        height: '100%',
+        background: 'rgba(255, 255, 255, 0.05)',
+        backdropFilter: 'blur(10px)',
+        borderRadius: '20px',
+        border: '1px solid rgba(255, 255, 255, 0.1)',
+        transition: 'all 0.3s ease-in-out',
+        '&:hover': {
+          transform: 'translateY(-5px)',
+          background: 'rgba(255, 255, 255, 0.08)',
+        },
+      }}
+    >
+      <Box
+        sx={{
+          color: BRAND_COLORS.teal,
+          fontSize: '2.5rem',
+          mb: 2,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+        }}
+      >
+        {icon}
+      </Box>
+      <Typography
+        variant="h5"
+        sx={{
+          color: 'white',
+          mb: 2,
+          fontWeight: 600,
+          fontFamily: 'Montserrat, sans-serif',
+        }}
+      >
+        {title}
+      </Typography>
+      <Typography
+        sx={{
+          color: BRAND_COLORS.slate,
+          fontFamily: 'Montserrat, sans-serif',
+        }}
+      >
+        {description}
+      </Typography>
+    </Paper>
+  </motion.div>
+);
 
 /* ===========================================
    Footer
@@ -531,14 +820,14 @@ const Footer = () => {
           color: 'rgba(255,255,255,0.6)',
         }}
       >
-        © 2025 ConnexionAI. All Rights Reserved.
+        © 2024 ConnexionAI. All Rights Reserved.
       </Typography>
     </Box>
   );
 };
 
 /* ===========================================
-   Landing Page 전체
+   Main Component
 =========================================== */
 const Home = () => {
   return (
@@ -550,296 +839,18 @@ const Home = () => {
         overflow: 'hidden',
       }}
     >
-      {/* Navigation Bar */}
       <NavigationBar />
-
-      {/* 상단 Hero Section */}
-      <Container 
-        maxWidth="lg" 
-        sx={{ 
-          position: 'relative',
-          zIndex: 2,
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          pt: { xs: 12, md: 10 },
-          pb: 8,
-          textAlign: 'center',
-        }}
-      >
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Box sx={{ mb: 2 }}>
-            <TypewriterText text="ConnexionAI" />
-          </Box>
-          <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }}>
-            <TypewriterDescription text="AI Agent 연결로 기업의 미래를 선도합니다." />
-            <Box sx={{ mt: 3, mb: 5 }}>
-              <Typography
-                sx={{
-                  color: 'rgba(255,255,255,0.8)',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontSize: '1.1rem',
-                  mb: 1,
-                  fontWeight: 500,
-                }}
-              >
-                # Multi-Agent System Development
-              </Typography>
-              <Typography
-                sx={{
-                  color: 'rgba(255,255,255,0.8)',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontSize: '1.1rem',
-                  mb: 1,
-                  fontWeight: 500,
-                }}
-              >
-                # Autonomous AI Agent Solutions
-              </Typography>
-                <Typography
-                  sx={{
-                  color: 'rgba(255,255,255,0.8)',
-                  fontFamily: 'Montserrat, sans-serif',
-                  fontSize: '1.1rem',
-                  fontWeight: 500,
-                }}
-              >
-                # Real-world Problem Solving
-                </Typography>
-              </Box>
-
-              <Button
-                variant="outlined"
-                size="large"
-              onClick={() => window.location.href = 'mailto:jay@connexionai.kr'}
-                sx={{
-                  color: '#ffffff',
-                  borderColor: 'rgba(255,255,255,0.3)',
-                fontSize: '1.2rem',
-                py: 2,
-                px: 6,
-                  borderWidth: '1px',
-                  position: 'relative',
-                  overflow: 'hidden',
-                fontFamily: 'Montserrat, sans-serif',
-                backdropFilter: 'blur(5px)',
-                fontWeight: 500,
-                  '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: '-100%',
-                    width: '100%',
-                    height: '100%',
-                  background:
-                    'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-                    animation: 'button-shine 3s infinite',
-                  },
-                  '@keyframes button-shine': {
-                    '0%': { left: '-100%' },
-                    '50%': { left: '100%' },
-                    '100%': { left: '100%' },
-                  },
-                  '&:hover': {
-                  borderColor: '#80f2d7',
-                  backgroundColor: 'rgba(128, 242, 215, 0.1)',
-                  cursor: 'pointer',
-                  },
-                }}
-              >
-              컨설팅 받기
-              </Button>
-            </motion.div>
-        </motion.div>
-      </Container>
-
-      {/* Since 2019 / Connect AI 섹션 (네온 텍스트) */}
-      <Box sx={{ textAlign: 'center', mt: -4, mb: 6, zIndex: 2, position: 'relative' }}>
-        <NeonFlickerText text="Since 2017" />
-        <Typography
-          variant="h3"
-          sx={{
-            color: BRAND_COLORS.white,
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: { xs: '1.8rem', md: '2.2rem' },
-            fontWeight: 600,
-            mt: 3,
-            mb: 2
-          }}
-        >
-          인공지능으로<br />현실의 문제를 해결합니다
-        </Typography>
-        <Typography
-          sx={{
-            color: BRAND_COLORS.slate,
-            fontFamily: 'Montserrat, sans-serif',
-            fontSize: { xs: '1.1rem', md: '1.2rem' },
-            maxWidth: '800px',
-            mx: 'auto',
-            lineHeight: 1.6,
-            mt: 3
-          }}
-        >
-          2017년부터 시작된 AI 컨설팅 경험과 기술력으로<br />
-          귀사의 디지털 혁신을 이끌어드립니다.
-        </Typography>
-      </Box>
-
-      {/* Wave Divider (아래에서 위로) */}
+      <HeroSection />
       <WaveDivider flip={false} />
-
-      {/* Parallax Section 1 */}
-      <ParallaxSection
-        image={
-          'https://images.unsplash.com/photo-1530497610241-2c107a97e773?auto=format&fit=crop&w=1920&q=80'
-        }
-      >
-        <Typography
-          variant="h3"
-          sx={{
-            fontWeight: 600,
-            fontFamily: 'Montserrat, sans-serif',
-            textShadow: '0 0 10px rgba(0,0,0,0.5)',
-            mb: 2
-          }}
-        >
-          Leading AI Innovations
-        </Typography>
-        <Typography
-          variant="h6"
-          sx={{
-            maxWidth: '600px',
-            mx: 'auto',
-            fontFamily: 'Montserrat, sans-serif',
-            color: 'rgba(255,255,255,0.85)',
-            fontWeight: 300,
-            mb: 2
-          }}
-        >
-          ConnexionAI는 멀티 에이전트 시스템 기반으로 기업의 복잡한 문제를 해결하고,
-          비즈니스를 혁신합니다.
-        </Typography>
-      </ParallaxSection>
-
-      {/* Wave Divider (위에서 아래로 뒤집힘) */}
+      <StatsSection />
       <WaveDivider flip={true} />
-
-      {/* Solutions Section */}
-      <Container
-        maxWidth="lg"
-        sx={{
-          position: 'relative',
-          zIndex: 2,
-          py: 10,
-        }}
-      >
-        <Box sx={{ mb: 6 }}>
-          <Typography
-            variant="h3"
-            sx={{
-              fontWeight: 600,
-              color: BRAND_COLORS.white,
-              mb: 1,
-              textAlign: 'center',
-              fontFamily: 'Montserrat, sans-serif',
-            }}
-          >
-            Our Services
-          </Typography>
-          <Typography
-            sx={{
-              color: BRAND_COLORS.slate,
-              textAlign: 'center',
-              mb: 3,
-              fontFamily: 'Montserrat, sans-serif',
-            }}
-          >
-            ConnexionAI가 제공하는 전문 AI 서비스를 통해 귀사의 디지털 혁신을 시작하세요.
-          </Typography>
-        </Box>
-        <Grid container spacing={4} justifyContent="center">
-          <Grid item xs={12} md={3}>
-            <ServiceCard
-              icon={<GiArtificialIntelligence />}
-              title="AI 전략 컨설팅"
-              description="귀사의 비즈니스 모델과 산업 특성을 분석하여 AI 도입 전략을 수립합니다. 데이터 기반 의사결정과 프로세스 혁신을 통해 경쟁력을 강화합니다."
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <ServiceCard
-              icon={<MdAutorenew />}
-              title="자율화 멀티 에이전트"
-              description="협업하는 AI 에이전트 시스템을 개발합니다. 복잡한 비즈니스 문제를 자율적으로 해결하는 멀티 에이전트 솔루션을 구축합니다."
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <ServiceCard
-              icon={<MdIntegrationInstructions />}
-              title="AI 솔루션 개발"
-              description="자연어 처리, 컴퓨터 비전, 예측 모델링 등 다양한 AI 기술을 활용하여 귀사의 니즈에 맞는 맞춤형 솔루션을 개발합니다."
-            />
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <ServiceCard
-              icon={<MdIntegrationInstructions />}
-              title="AI 교육 프로그램"
-              description="임직원의 AI 역량 강화를 위한 맞춤형 교육 프로그램을 제공합니다. 실무 중심의 커리큘럼과 실습을 통해 실질적인 AI 활용 능력을 배양합니다."
-            />
-          </Grid>
-        </Grid>
-      </Container>
-
-      {/* Wave Divider (아래에서 위로) */}
+      <ServicesSection />
       <WaveDivider flip={false} />
-
-      {/* 인공지능 교육 섹션 (스크롤 시 보이는 단일 블록) */}
-      <EducationSection />
-
-      {/* Wave Divider (위에서 아래로) */}
+      <FeaturesSection />
       <WaveDivider flip={true} />
-
-      {/* Parallax Section 2 */}
-      <ParallaxSection
-        image={
-          'https://images.unsplash.com/photo-1532619226061-76f1b15b6c19?auto=format&fit=crop&w=1920&q=80'
-        }
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 600,
-            fontFamily: 'Montserrat, sans-serif',
-            textShadow: '0 0 10px rgba(0,0,0,0.5)',
-            mb: 2
-          }}
-        >
-          Driving Business Transformation
-        </Typography>
-        <Typography
-          variant="body1"
-          sx={{
-            maxWidth: '600px',
-            mx: 'auto',
-            fontFamily: 'Montserrat, sans-serif',
-            color: 'rgba(255,255,255,0.85)',
-            fontWeight: 300
-          }}
-        >
-          ConnexionAI는 기업의 워크플로우 전반에 AI 에이전트를 접목하여,  
-          업무 효율과 경쟁력을 극대화합니다. 지금 컨설팅을 받아보세요!
-        </Typography>
-      </ParallaxSection>
-
-      {/* Footer */}
       <Footer />
     </Box>
   );
 };
 
-export default Home; 
+export default Home;
