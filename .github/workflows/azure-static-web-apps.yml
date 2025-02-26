@@ -23,6 +23,12 @@ jobs:
       - name: Set CI=false
         run: echo "CI=false" >> $GITHUB_ENV
       
+      # 빌드 전 직접 .env 파일 생성
+      - name: Create .env file
+        run: |
+          cd connexionai-web
+          echo "CI=false" > .env
+      
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -32,8 +38,9 @@ jobs:
           app_location: "/connexionai-web"
           api_location: ""
           output_location: "build"
+          app_build_command: "CI=false npm run build"
         env:
-          CI: false
+          CI: "false"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

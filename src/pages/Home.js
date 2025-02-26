@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -18,12 +18,11 @@ import {
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { GiBrain } from "react-icons/gi";
-import { MdIntegrationInstructions, MdBusinessCenter, MdSchool, MdAutoFixHigh, MdSecurity } from "react-icons/md";
-import { FaRobot, FaRegLightbulb, FaNetworkWired, FaDatabase, FaYoutube, FaInstagram } from 'react-icons/fa';
-import { BsGraphUp } from 'react-icons/bs';
+import { MdIntegrationInstructions, MdAutoFixHigh, MdSecurity } from "react-icons/md";
+import { FaRobot, FaNetworkWired, FaDatabase, FaYoutube, FaInstagram } from 'react-icons/fa';
 import CountUp from 'react-countup';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Environment, Float, Text3D } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
+import { Text3D } from '@react-three/drei';
 
 // Brand colors
 const BRAND_COLORS = {
@@ -204,41 +203,6 @@ const NavigationBar = () => {
         </Toolbar>
       </Container>
     </AppBar>
-  );
-};
-
-/* ===========================================
-   3D Logo Component
-=========================================== */
-const Logo3D = () => {
-  const meshRef = useRef();
-
-  useFrame((state) => {
-    meshRef.current.rotation.y = Math.sin(state.clock.elapsedTime) * 0.2;
-    meshRef.current.rotation.x = Math.cos(state.clock.elapsedTime) * 0.2;
-  });
-
-  return (
-    <mesh ref={meshRef}>
-      <Text3D
-        font="/fonts/helvetiker_regular.typeface.json"
-        size={1.5}
-        height={0.2}
-        curveSegments={12}
-        bevelEnabled
-        bevelThickness={0.02}
-        bevelSize={0.02}
-        bevelOffset={0}
-        bevelSegments={5}
-      >
-        CONNEXIONAI
-        <meshStandardMaterial 
-          color={'#ffffff'}
-          metalness={0.8}
-          roughness={0.2}
-        />
-      </Text3D>
-    </mesh>
   );
 };
 
@@ -541,62 +505,6 @@ const HeroSection = () => {
     </Box>
   );
 };
-
-/* ===========================================
-   Stats Card Component
-=========================================== */
-const StatsCard = ({ icon, value, label, suffix = '' }) => (
-  <Paper
-    elevation={0}
-    sx={{
-      p: 4,
-      height: '100%',
-      background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(10px)',
-      borderRadius: '4px',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      textAlign: 'center',
-      transition: 'all 0.3s ease-in-out',
-      '&:hover': {
-        transform: 'translateY(-5px)',
-        background: 'rgba(255, 255, 255, 0.08)',
-        boxShadow: '0 8px 30px rgba(255, 255, 255, 0.1)',
-      },
-    }}
-  >
-    <Box
-      sx={{
-        color: BRAND_COLORS.teal,
-        fontSize: '2.5rem',
-        mb: 2,
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      {icon}
-    </Box>
-    <Typography
-      variant="h3"
-      sx={{
-        fontWeight: 700,
-        color: 'white',
-        mb: 1,
-        fontFamily: 'monospace',
-        letterSpacing: '0.1em',
-      }}
-    >
-      <CountUp end={value} duration={2.5} />{suffix}
-    </Typography>
-    <Typography
-      sx={{
-        color: BRAND_COLORS.slate,
-        fontFamily: 'monospace',
-      }}
-    >
-      {label}
-    </Typography>
-  </Paper>
-);
 
 /* ===========================================
    Services Section
