@@ -243,43 +243,6 @@ const Logo3D = () => {
 };
 
 /* ===========================================
-   3D Scene Component
-=========================================== */
-const Scene3D = () => {
-  return (
-    <Canvas
-      camera={{ position: [0, 0, 10], fov: 50 }}
-      style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-      }}
-    >
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} intensity={1} />
-      <Suspense fallback={null}>
-        <Float
-          speed={3}
-          rotationIntensity={0.5}
-          floatIntensity={2}
-        >
-          <Logo3D />
-        </Float>
-        <Environment preset="city" />
-      </Suspense>
-      <OrbitControls 
-        enableZoom={false}
-        enablePan={false}
-        enableRotate={false}
-      />
-    </Canvas>
-  );
-};
-
-/* ===========================================
    Hero Section with Animated Text
 =========================================== */
 const HeroSection = () => {
@@ -578,50 +541,6 @@ const HeroSection = () => {
     </Box>
   );
 };
-
-/* ===========================================
-   Stats Section
-=========================================== */
-const StatsSection = () => (
-  <Box sx={{ py: 10, position: 'relative' }}>
-    <Container maxWidth="lg">
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={3}>
-          <StatsCard
-            icon={<MdBusinessCenter />}
-            value={7}
-            label="AI 자율화 경험"
-            suffix="년+"
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <StatsCard
-            icon={<BsGraphUp />}
-            value={120}
-            label="자율화 프로젝트"
-            suffix="+"
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <StatsCard
-            icon={<FaRegLightbulb />}
-            value={35}
-            label="AI 모델 개발"
-            suffix="+"
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <StatsCard
-            icon={<MdSchool />}
-            value={85}
-            label="기업 파트너십"
-            suffix="+"
-          />
-        </Grid>
-      </Grid>
-    </Container>
-  </Box>
-);
 
 /* ===========================================
    Stats Card Component

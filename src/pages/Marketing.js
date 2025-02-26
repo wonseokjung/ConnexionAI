@@ -17,7 +17,7 @@ import {
   Tooltip
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import { FaYoutube, FaSearch, FaCopy, FaDownload } from 'react-icons/fa';
+import { FaYoutube, FaSearch, FaDownload } from 'react-icons/fa';
 import { MdContentCopy, MdCampaign } from 'react-icons/md';
 
 const MarketingService = () => {
@@ -29,54 +29,6 @@ const MarketingService = () => {
   const [generatedContent, setGeneratedContent] = useState(null);
 
   // 데모 데이터
-  const demoAnalysis = {
-    title: "10분만에 끝내는 주식투자 핵심 팁",
-    metrics: {
-      views: "283,421",
-      likes: "15,234",
-      comments: "1,234",
-      engagement: "8.2%"
-    },
-    trends: [
-      "투자 교육",
-      "주식 초보",
-      "재테크",
-      "경제 교육"
-    ],
-    insights: [
-      {
-        title: "콘텐츠 최적화",
-        points: [
-          "영상 길이(10분)가 시청자 이탈률 감소에 효과적",
-          "섬네일의 텍스트 가독성이 높아 CTR 상승",
-          "초반 15초 인트로가 시청자 집중도 향상에 기여"
-        ]
-      },
-      {
-        title: "키워드 분석",
-        points: [
-          "'주식초보', '주식공부' 키워드 검색량 증가 추세",
-          "관련 동영상 추천 노출 빈도 상위 20% 기록",
-          "댓글 참여도가 유사 콘텐츠 대비 32% 높음"
-        ]
-      },
-      {
-        title: "시청자 행동 패턴",
-        points: [
-          "주요 시청 시간대: 저녁 8시-11시",
-          "모바일 시청 비중: 76%",
-          "영상 내 중요 포인트 타임스탬프 활용도 높음"
-        ]
-      }
-    ],
-    recommendations: [
-      "시리즈 콘텐츠로 확장하여 구독자 유입 유도",
-      "실전 투자 사례 중심의 후속 콘텐츠 제작 추천",
-      "주 2회 정기적인 업로드로 구독자 충성도 강화",
-      "댓글 피드백을 활용한 Q&A 콘텐츠 제작"
-    ]
-  };
-
   const demoLeads = {
     results: [
       {
