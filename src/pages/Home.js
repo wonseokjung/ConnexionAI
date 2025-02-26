@@ -8,27 +8,19 @@ import {
   Paper,
   AppBar,
   Toolbar,
-  Fade,
-  useScrollTrigger,
   IconButton,
-  Avatar,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  Card,
-  CardContent,
-  useMediaQuery,
-  useTheme,
   Tooltip,
 } from '@mui/material';
-import { motion, useAnimation, useScroll, useTransform } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { GiArtificialIntelligence, GiBrain } from "react-icons/gi";
-import { MdAutorenew, MdIntegrationInstructions, MdGroups, MdBusinessCenter, MdSchool, MdAutoFixHigh, MdSecurity } from "react-icons/md";
-import { FaRobot, FaRegLightbulb, FaIndustry, FaChartLine, FaNetworkWired, FaDatabase, FaYoutube, FaInstagram } from 'react-icons/fa';
-import { BsGraphUp, BsLightningCharge } from 'react-icons/bs';
+import { GiBrain } from "react-icons/gi";
+import { MdIntegrationInstructions, MdBusinessCenter, MdSchool, MdAutoFixHigh, MdSecurity } from "react-icons/md";
+import { FaRobot, FaRegLightbulb, FaNetworkWired, FaDatabase, FaYoutube, FaInstagram } from 'react-icons/fa';
+import { BsGraphUp } from 'react-icons/bs';
 import CountUp from 'react-countup';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Environment, Float, Text3D } from '@react-three/drei';
@@ -377,7 +369,7 @@ const HeroSection = () => {
                   fontFamily: 'monospace',
                 }}
               >
-                // AI Autonomy
+                AI Autonomy
               </Box>
             </Typography>
           </motion.div>

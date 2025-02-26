@@ -17,14 +17,12 @@ import {
   Tooltip
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import { FaYoutube, FaChartLine, FaRobot, FaLinkedin, FaTwitter, FaInstagram, FaSearch, FaCopy, FaDownload } from 'react-icons/fa';
-import { MdTrendingUp, MdAnalytics, MdContentCopy, MdEmail, MdBusiness, MdCampaign } from 'react-icons/md';
+import { FaYoutube, FaSearch, FaCopy, FaDownload } from 'react-icons/fa';
+import { MdContentCopy, MdCampaign } from 'react-icons/md';
 
 const MarketingService = () => {
   const [activeTab, setActiveTab] = useState(0);
-  const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
-  const [analysis, setAnalysis] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   const [contentType, setContentType] = useState('');
@@ -144,14 +142,6 @@ const MarketingService = () => {
 
   const handleTabChange = (event, newValue) => {
     setActiveTab(newValue);
-  };
-
-  const handleAnalyze = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setAnalysis(demoAnalysis);
-      setLoading(false);
-    }, 2000);
   };
 
   const handleLeadSearch = () => {
@@ -471,7 +461,7 @@ const MarketingService = () => {
                           sx={{ color: '#2196F3' }}
                           onClick={() => navigator.clipboard.writeText(platform.content)}
                         >
-                          <FaCopy />
+                          <MdContentCopy />
                         </IconButton>
                       </Box>
                       <Typography
@@ -529,7 +519,7 @@ const MarketingService = () => {
                         sx={{ color: '#2196F3' }}
                         onClick={() => navigator.clipboard.writeText(generatedContent.emailTemplate.body)}
                       >
-                        <FaCopy />
+                        <MdContentCopy />
                       </IconButton>
                     </Box>
                     <Typography
