@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Container,
@@ -20,9 +20,6 @@ import { useNavigate } from 'react-router-dom';
 import { GiBrain } from "react-icons/gi";
 import { MdIntegrationInstructions, MdAutoFixHigh, MdSecurity } from "react-icons/md";
 import { FaRobot, FaNetworkWired, FaDatabase, FaYoutube, FaInstagram } from 'react-icons/fa';
-import CountUp from 'react-countup';
-import { useFrame } from '@react-three/fiber';
-import { Text3D } from '@react-three/drei';
 
 // Brand colors
 const BRAND_COLORS = {
