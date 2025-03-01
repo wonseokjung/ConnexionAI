@@ -9,6 +9,7 @@ import About from './pages/About';
 import Blog from './pages/Blog';
 import MarketingService from './pages/Marketing';
 import PrivacyPolicy from './pages/PrivacyPolicy';
+import AIAgents from './pages/AIAgents';
 
 const theme = createTheme({
   palette: {
@@ -86,6 +87,13 @@ const Navigation = () => {
         <Box>
           <Button 
             color="primary" 
+            onClick={() => navigate('/aiagents')}
+            sx={{ mx: 1 }}
+          >
+            AI 에이전트
+          </Button>
+          <Button 
+            color="primary" 
             onClick={() => navigate('/about')}
             sx={{ mx: 1 }}
           >
@@ -134,6 +142,7 @@ function App() {
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/aiagents" element={<AIAgents />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/marketing" element={<MarketingService />} />

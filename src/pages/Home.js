@@ -106,7 +106,7 @@ const NavigationBar = () => {
             CONNEXIONAI
           </Typography>
           <Box sx={{ display: 'flex', gap: 4 }}>
-            {['Home', 'About', 'Blog'].map((item) => (
+            {['Home', 'AIAgents', 'About', 'Blog'].map((item) => (
               <Typography
                 key={item}
                 onClick={() =>
@@ -136,7 +136,7 @@ const NavigationBar = () => {
                   },
                 }}
               >
-                {item}
+                {item === 'AIAgents' ? 'AI 에이전트' : item}
               </Typography>
             ))}
           </Box>
