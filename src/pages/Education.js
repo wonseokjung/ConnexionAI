@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Container,
@@ -21,13 +21,11 @@ import {
   ListItemText,
   Avatar,
   IconButton,
-  Tooltip,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FaCode, FaVideo, FaFilePdf, FaGithub, FaDownload, FaPlay } from 'react-icons/fa';
-import { MdDescription, MdSchool, MdFilterNone, MdCheck, MdArrowBack, MdNotifications } from 'react-icons/md';
-import { HiOutlineDocumentDownload } from 'react-icons/hi';
+import { FaVideo, FaDownload, FaPlay, FaCode, FaFilePdf, FaGithub } from 'react-icons/fa';
+import { MdSchool, MdFilterNone, MdCheck, MdArrowBack, MdNotifications } from 'react-icons/md';
 
 // 교육 코스 데이터
 const courses = [
@@ -74,6 +72,55 @@ const courses = [
         title: "활용 및 확장",
         content: "학습한 기술을 다양한 이미지 분석 프로젝트에 적용하는, 왕초보도 할 수 있는 실용적인 방법을 탐색합니다.",
         status: "pending"
+      }
+    ],
+    relatedBlogPosts: [
+      {
+        title: "AI 초보자를 위한 이미지 분류 완전 가이드",
+        url: "/blog/beginners-guide-to-image-classification",
+        date: "2025년 1월 15일 예정",
+        readTime: 7,
+        status: "upcoming"
+      },
+      {
+        title: "Hugging Face Transformers로 5분 만에 이미지 인식하기",
+        url: "/blog/image-recognition-in-5-minutes-with-hugging-face",
+        date: "2025년 2월 1일 예정",
+        readTime: 5,
+        status: "upcoming"
+      },
+      {
+        title: "왕초보도 할 수 있는 AI 이미지 분석 프로젝트 3가지",
+        url: "/blog/3-image-analysis-projects-for-beginners",
+        date: "2025년 2월 20일 예정",
+        readTime: 10,
+        status: "upcoming"
+      }
+    ],
+    contentCalendar: [
+      {
+        week: "D-14",
+        title: "이미지 분류란 무엇인가?",
+        description: "키워드 기반 SEO 최적화 블로그 포스트",
+        type: "블로그"
+      },
+      {
+        week: "D-7",
+        title: "Hugging Face 시작하기",
+        description: "실용적인 팁 중심 블로그 포스트",
+        type: "블로그"
+      },
+      {
+        week: "D-Day",
+        title: "이미지 분류 강의 공개",
+        description: "강의 출시 및 상세 가이드 블로그 동시 공개",
+        type: "강의 + 블로그"
+      },
+      {
+        week: "D+7",
+        title: "왕초보 AI 프로젝트 적용 사례",
+        description: "실제 적용 사례와 사용자 피드백",
+        type: "블로그"
       }
     ],
     notebookContent: `
@@ -194,6 +241,62 @@ print(predictions)
         title: "확장 및 응용 방안",
         content: "마케팅, 디자인 등 다양한 부서에 적용 가능한 AI 자동화 전략과 비용 효율성, 인력 대체 효과에 대해 논의합니다."
       }
+    ],
+    relatedBlogPosts: [
+      {
+        title: "AutoGen으로 24시간 작동하는 AI 리서치 팀 구축하기",
+        url: "/blog/automate-research-team-with-autogen",
+        date: "2023년 12월 15일",
+        readTime: 8,
+        status: "published"
+      },
+      {
+        title: "AI 자동화로 리서치 비용 90% 절감한 사례 연구",
+        url: "/blog/research-cost-reduction-with-ai-automation",
+        date: "2023년 12월 22일",
+        readTime: 12,
+        status: "published"
+      },
+      {
+        title: "Microsoft AutoGen vs. LangChain: AI 자동화 프레임워크 비교",
+        url: "/blog/autogen-vs-langchain-comparison",
+        date: "2024년 1월 5일",
+        readTime: 10,
+        status: "published"
+      },
+      {
+        title: "초보자도 할 수 있는 5가지 AI 에이전트 자동화 프로젝트",
+        url: "/blog/5-ai-agent-automation-projects-for-beginners",
+        date: "2024년 1월 15일",
+        readTime: 15,
+        status: "published"
+      }
+    ],
+    contentCalendar: [
+      {
+        week: "1주차",
+        title: "AutoGen 시작하기",
+        description: "기초 설명 및 설치 가이드",
+        type: "블로그"
+      },
+      {
+        week: "2주차",
+        title: "AI 에이전트 역할 설계하기",
+        description: "효과적인 팀 구성 방법 안내",
+        type: "블로그"
+      },
+      {
+        week: "3주차",
+        title: "AI 리서치팀 자동화 강의 공개",
+        description: "실전 활용법 안내 및 코드 예제",
+        type: "강의 + 블로그"
+      },
+      {
+        week: "4주차",
+        title: "사례 연구: 리서치 비용 절감",
+        description: "실제 비즈니스 적용 사례 및 ROI 분석",
+        type: "블로그"
+      }
     ]
   }
 ];
@@ -206,7 +309,6 @@ const CourseCard = ({ course, onClick }) => {
   });
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <motion.div 
@@ -367,7 +469,6 @@ const CourseDetail = ({ course, onBack }) => {
   const [tabValue, setTabValue] = useState(0);
   
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -482,10 +583,14 @@ const CourseDetail = ({ course, onBack }) => {
                   backgroundColor: 'primary.main',
                 },
               }}
+              variant="scrollable"
+              scrollButtons="auto"
             >
               <Tab label="커리큘럼" />
               <Tab label="노트북 예제" />
               <Tab label="수강 전 준비사항" />
+              <Tab label="관련 블로그" />
+              <Tab label="콘텐츠 캘린더" />
             </Tabs>
             
             <Box sx={{ py: 3 }}>
@@ -648,6 +753,213 @@ const CourseDetail = ({ course, onBack }) => {
                   </List>
                 </Box>
               )}
+              
+              {tabValue === 3 && (
+                <Box>
+                  <Typography variant="h6" gutterBottom fontWeight="bold">
+                    관련 블로그 포스트
+                  </Typography>
+                  
+                  <Typography variant="body2" color="text.secondary" paragraph>
+                    {course.releaseDate 
+                      ? "아래 블로그 포스트는 강의 출시와 함께 순차적으로 공개될 예정입니다." 
+                      : "강의 내용을 더 깊이 이해하고 실무에 적용하는 데 도움이 되는 블로그 포스트입니다."}
+                  </Typography>
+                  
+                  <Grid container spacing={2} sx={{ mt: 1 }}>
+                    {course.relatedBlogPosts.map((post, index) => (
+                      <Grid item xs={12} key={index}>
+                        <Paper
+                          elevation={0}
+                          component={post.status === 'published' ? 'a' : 'div'}
+                          href={post.status === 'published' ? post.url : undefined}
+                          target={post.status === 'published' ? "_blank" : undefined}
+                          rel="noopener noreferrer"
+                          sx={{ 
+                            textDecoration: 'none', 
+                            cursor: post.status === 'published' ? 'pointer' : 'default',
+                            display: 'block',
+                            p: 2,
+                            borderRadius: 2,
+                            bgcolor: 'rgba(0, 0, 0, 0.2)',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            transition: 'transform 0.2s, box-shadow 0.2s',
+                            '&:hover': {
+                              transform: 'translateY(-3px)',
+                              boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+                              bgcolor: 'rgba(0, 0, 0, 0.3)',
+                            }
+                          }}
+                        >
+                          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                            <Typography variant="subtitle1" fontWeight="bold">
+                              {post.title}
+                            </Typography>
+                            {post.status === 'upcoming' && (
+                              <Chip 
+                                size="small" 
+                                label="예정" 
+                                color="primary"
+                              />
+                            )}
+                          </Box>
+                          
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, color: 'text.secondary' }}>
+                            <Typography variant="body2">
+                              {post.date}
+                            </Typography>
+                            <Typography variant="body2" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                              <span role="img" aria-label="reading time">⏱️</span> {post.readTime}분 읽기
+                            </Typography>
+                          </Box>
+                          
+                          {post.status === 'published' ? (
+                            <Button
+                              size="small"
+                              variant="text"
+                              sx={{ mt: 1, fontWeight: 'bold', p: 0, minWidth: 'auto' }}
+                            >
+                              읽어보기 →
+                            </Button>
+                          ) : (
+                            <Button 
+                              size="small" 
+                              variant="text" 
+                              sx={{ mt: 1, p: 0 }}
+                              disabled
+                            >
+                              출시 예정
+                            </Button>
+                          )}
+                        </Paper>
+                      </Grid>
+                    ))}
+                  </Grid>
+                  
+                  <Box
+                    sx={{
+                      mt: 4,
+                      p: 3,
+                      borderRadius: 2,
+                      backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                      border: '1px solid rgba(25, 118, 210, 0.3)',
+                    }}
+                  >
+                    <Typography variant="h6" fontWeight="bold" gutterBottom>
+                      블로그 구독하기
+                    </Typography>
+                    <Typography variant="body2" paragraph>
+                      강의 관련 새로운 블로그 포스트와 AI 최신 정보를 이메일로 받아보세요.
+                    </Typography>
+                    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+                      <Button 
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          alert('블로그 구독이 완료되었습니다!');
+                        }}
+                      >
+                        무료로 구독하기
+                      </Button>
+                    </Box>
+                  </Box>
+                </Box>
+              )}
+              
+              {tabValue === 4 && (
+                <Box>
+                  <Typography variant="h6" gutterBottom fontWeight="bold" sx={{ mb: 3 }}>
+                    콘텐츠 발행 일정
+                  </Typography>
+                  
+                  <Typography variant="body2" color="text.secondary" paragraph>
+                    {course.releaseDate 
+                      ? "강의와 함께 제공될 블로그 콘텐츠의 출시 일정입니다. 아래 일정에 맞춰 유익한 내용을 순차적으로 제공할 예정입니다." 
+                      : "강의와 함께 제공되는 블로그 콘텐츠의 출시 일정입니다. 단계별로 깊이있는 내용을 학습하실 수 있습니다."}
+                  </Typography>
+                  
+                  <Box sx={{ position: 'relative', ml: 2, mt: 4 }}>
+                    {/* 타임라인 세로선 */}
+                    <Box sx={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '2px', bgcolor: 'primary.main', ml: 2 }}></Box>
+                    
+                    {course.contentCalendar.map((item, index) => (
+                      <Box 
+                        key={index}
+                        sx={{ 
+                          mb: 4, 
+                          position: 'relative',
+                          pl: 6,
+                        }}
+                      >
+                        {/* 타임라인 포인트 */}
+                        <Box sx={{ 
+                          position: 'absolute', 
+                          left: 0, 
+                          width: '20px', 
+                          height: '20px', 
+                          borderRadius: '50%', 
+                          bgcolor: 'primary.main',
+                          border: '4px solid rgba(0,0,0,0.3)',
+                          zIndex: 1
+                        }}></Box>
+                        
+                        {/* 주차 표시 */}
+                        <Typography 
+                          variant="body2" 
+                          sx={{ 
+                            position: 'absolute', 
+                            left: 3, 
+                            top: -3, 
+                            color: 'white',
+                            fontWeight: 'bold',
+                            width: '70px',
+                            textAlign: 'center',
+                            fontSize: '0.75rem'
+                          }}
+                        >
+                          {item.week}
+                        </Typography>
+                        
+                        <Paper
+                          elevation={0}
+                          sx={{
+                            p: 2,
+                            borderRadius: 2,
+                            bgcolor: item.type.includes('강의') ? 'rgba(76, 175, 80, 0.1)' : 'rgba(0, 0, 0, 0.2)',
+                            border: `1px solid ${item.type.includes('강의') ? 'rgba(76, 175, 80, 0.3)' : 'rgba(255, 255, 255, 0.1)'}`,
+                          }}
+                        >
+                          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                            <Typography variant="h6" fontWeight="bold">
+                              {item.title}
+                            </Typography>
+                            <Chip 
+                              size="small" 
+                              label={item.type} 
+                              color={item.type.includes('강의') ? "success" : "primary"}
+                            />
+                          </Box>
+                          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                            {item.description}
+                          </Typography>
+                        </Paper>
+                      </Box>
+                    ))}
+                  </Box>
+                  
+                  <Box sx={{ mt: 3, textAlign: 'center' }}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => {
+                        alert('콘텐츠 캘린더 알림 신청이 완료되었습니다!');
+                      }}
+                    >
+                      콘텐츠 발행 알림 받기
+                    </Button>
+                  </Box>
+                </Box>
+              )}
             </Box>
           </Box>
         </Grid>
@@ -768,7 +1080,7 @@ const CourseDetail = ({ course, onBack }) => {
                   borderRadius: '8px',
                   textTransform: 'none',
                 }}
-                startIcon={<HiOutlineDocumentDownload />}
+                startIcon={<FaDownload />}
                 component="a"
                 href={course.downloads[0]?.url}
                 target="_blank"
@@ -786,10 +1098,6 @@ const CourseDetail = ({ course, onBack }) => {
 // 교육 페이지 메인 컴포넌트
 const Education = () => {
   const [selectedCourse, setSelectedCourse] = useState(null);
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
 
   const handleCourseSelect = (course) => {
     setSelectedCourse(course);
@@ -813,224 +1121,137 @@ const Education = () => {
       <Container maxWidth="xl">
         {!selectedCourse ? (
           <>
-            <motion.div
-              ref={ref}
-              initial={{ opacity: 0, y: 50 }}
-              animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.5 }}
+            <Typography 
+              variant="h2" 
+              component="h1" 
+              sx={{ 
+                fontWeight: 800,
+                mb: 1,
+                fontSize: { xs: '2rem', md: '3rem' }
+              }}
             >
-              <Typography 
-                variant="h2" 
-                component="h1" 
-                sx={{ 
-                  fontWeight: 800,
-                  mb: 1,
-                  fontSize: { xs: '2rem', md: '3rem' }
-                }}
-              >
-                AI 교육 센터
-              </Typography>
-              <Typography 
-                variant="h5" 
-                color="primary.light" 
-                sx={{ 
-                  mb: 6,
-                  maxWidth: '800px',
-                  opacity: 0.9,
-                  fontSize: { xs: '1rem', md: '1.25rem' }
-                }}
-              >
-                AI 기술을 비즈니스에 적용하는 실용적인 튜토리얼과 코스를 제공합니다.
-                쉽게 따라할 수 있는 코드 예제와 실제 비즈니스 사례를 통해 AI 역량을 강화하세요.
-              </Typography>
-            </motion.div>
+              AI 교육 센터
+            </Typography>
+            <Typography 
+              variant="h5" 
+              color="primary.light" 
+              sx={{ 
+                mb: 6,
+                maxWidth: '800px',
+                opacity: 0.9,
+                fontSize: { xs: '1rem', md: '1.25rem' }
+              }}
+            >
+              AI 기술을 비즈니스에 적용하는 실용적인 튜토리얼과 코스를 제공합니다.
+              쉽게 따라할 수 있는 코드 예제와 실제 비즈니스 사례를 통해 AI 역량을 강화하세요.
+            </Typography>
 
             {/* 최신 튜토리얼 섹션 */}
-            <Box sx={{ mb: 8 }}>
-              <Typography 
-                variant="h4" 
-                component="h2" 
-                sx={{ 
-                  fontWeight: 700,
-                  mb: 3,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Box 
-                  component="span" 
-                  sx={{ 
-                    width: 4, 
-                    height: 24, 
-                    backgroundColor: 'primary.main',
-                    display: 'inline-block', 
-                    mr: 2,
-                    borderRadius: 1 
-                  }} 
-                />
+            <Box sx={{ mb: 10 }}>
+              <Typography variant="h4" fontWeight="bold" sx={{ mb: 4 }}>
                 최신 튜토리얼
               </Typography>
               
-              <Paper
-                elevation={0}
-                sx={{
-                  mb: 4,
-                  borderRadius: '16px',
-                  overflow: 'hidden',
-                  background: 'rgba(0, 0, 0, 0.3)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                }}
-              >
-                <Grid container>
-                  <Grid item xs={12} md={6}>
-                    <Box sx={{ position: 'relative', width: '100%', height: '100%', minHeight: { xs: '200px', md: '360px' } }}>
-                      <Box 
-                        component="img"
-                        src={courses[0].thumbnail}
-                        alt={courses[0].title}
-                        sx={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'cover',
-                          filter: 'brightness(0.8)',
-                        }}
-                      />
-                      <Box
-                        sx={{
-                          position: 'absolute',
-                          top: '50%',
-                          left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                        }}
-                      >
-                        <IconButton
-                          aria-label="재생"
-                          sx={{
-                            width: 80,
-                            height: 80,
-                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                            '&:hover': {
-                              backgroundColor: 'primary.main',
-                              transform: 'scale(1.1)',
-                            },
-                            transition: 'all 0.3s ease',
-                          }}
-                          onClick={() => handleCourseSelect(courses[0])}
-                        >
-                          <FaPlay size={30} />
-                        </IconButton>
-                      </Box>
-                    </Box>
-                  </Grid>
-                  <Grid item xs={12} md={6}>
-                    <Box 
-                      sx={{ 
-                        p: { xs: 3, md: 5 },
-                        height: '100%',
+              {courses.length > 0 && (
+                <Grid container spacing={4}>
+                  <Grid item xs={12} md={7}>
+                    <Box
+                      sx={{
+                        position: 'relative',
+                        borderRadius: 3,
+                        overflow: 'hidden',
+                        height: 300,
+                        backgroundImage: `url(${courses[0].thumbnail})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        boxShadow: 'inset 0 0 0 2000px rgba(0, 0, 0, 0.6)',
                         display: 'flex',
                         flexDirection: 'column',
-                        justifyContent: 'center',
+                        justifyContent: 'flex-end',
+                        p: 3,
+                        transition: 'transform 0.3s',
+                        '&:hover': {
+                          transform: 'scale(1.02)',
+                        }
                       }}
+                      onClick={() => handleCourseSelect(courses[0])}
                     >
-                      <Chip
-                        label="NEW"
-                        color="primary"
-                        size="small"
-                        sx={{ 
-                          alignSelf: 'flex-start', 
-                          mb: 2,
-                          fontWeight: 'bold',
-                        }}
+                      <Chip 
+                        label={courses[0].level} 
+                        color="primary" 
+                        size="small" 
+                        sx={{ mb: 2, fontWeight: 'bold' }}
                       />
-                      <Typography 
-                        variant="h4" 
-                        component="h3" 
-                        sx={{ 
-                          fontWeight: 800,
-                          mb: 2,
-                          fontSize: { xs: '1.5rem', md: '2rem' }
-                        }}
-                      >
+                      <Typography variant="h5" fontWeight="bold" gutterBottom>
                         {courses[0].title}
                       </Typography>
-                      <Typography 
-                        variant="body1" 
-                        sx={{ 
-                          mb: 4,
-                          opacity: 0.8,
-                          fontSize: { xs: '0.9rem', md: '1rem' }
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          display: '-webkit-box',
+                          mb: 2
                         }}
                       >
                         {courses[0].description}
                       </Typography>
-                      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 3 }}>
-                        <Chip 
-                          icon={<FaVideo size={14} />} 
-                          label={courses[0].duration} 
-                          variant="outlined" 
-                          size="small" 
-                        />
-                        <Chip 
-                          label={courses[0].level} 
-                          variant="outlined" 
-                          size="small" 
-                        />
-                        <Chip 
-                          label={courses[0].instructor} 
-                          variant="outlined" 
-                          size="small" 
-                        />
-                      </Box>
                       <Button
                         variant="contained"
                         color="primary"
-                        size="large"
-                        endIcon={<FaPlay />}
-                        onClick={() => handleCourseSelect(courses[0])}
-                        sx={{
-                          alignSelf: 'flex-start',
-                          px: 3,
-                          py: 1,
-                          borderRadius: 2,
-                          fontWeight: 'bold',
-                          textTransform: 'none',
-                        }}
+                        startIcon={<FaPlay />}
+                        sx={{ alignSelf: 'flex-start' }}
                       >
-                        튜토리얼 보기
+                        강의 보기
                       </Button>
                     </Box>
                   </Grid>
+                  
+                  <Grid item xs={12} md={5}>
+                    <Box
+                      sx={{
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        p: 3,
+                        background: 'linear-gradient(135deg, rgba(30,30,30,0.8) 0%, rgba(10,10,10,0.9) 100%)',
+                        borderRadius: 3,
+                      }}
+                    >
+                      <Typography variant="h5" fontWeight="bold" gutterBottom>
+                        곧 새로운 튜토리얼이 추가됩니다!
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary" paragraph>
+                        AI 비즈니스 활용, 개발 튜토리얼, 그리고 최신 AI 트렌드에 대한 
+                        새로운 교육 콘텐츠가 정기적으로 업데이트됩니다.
+                      </Typography>
+                      <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          onClick={() => {
+                            alert('알림 신청이 완료되었습니다!');
+                          }}
+                        >
+                          새 강의 알림 신청
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Paper>
+              )}
             </Box>
 
-            {/* 모든 튜토리얼 섹션 */}
+            {/* 모든 튜토리얼 & 코스 */}
             <Box>
-              <Typography 
-                variant="h4" 
-                component="h2" 
-                sx={{ 
-                  fontWeight: 700,
-                  mb: 3,
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-              >
-                <Box 
-                  component="span" 
-                  sx={{ 
-                    width: 4, 
-                    height: 24, 
-                    backgroundColor: 'primary.main',
-                    display: 'inline-block', 
-                    mr: 2,
-                    borderRadius: 1 
-                  }} 
-                />
+              <Typography variant="h4" fontWeight="bold" sx={{ mb: 4 }}>
                 모든 튜토리얼 & 코스
               </Typography>
               
-              <Grid container spacing={3}>
+              <Grid container spacing={4}>
                 {courses.map((course) => (
                   <Grid item xs={12} sm={6} md={4} key={course.id}>
                     <CourseCard 
@@ -1040,42 +1261,6 @@ const Education = () => {
                   </Grid>
                 ))}
               </Grid>
-              
-              {/* 컨텐츠 준비 중 메시지 */}
-              <Box 
-                sx={{ 
-                  mt: 8, 
-                  p: 4, 
-                  textAlign: 'center',
-                  borderRadius: '16px',
-                  border: '1px dashed rgba(255, 255, 255, 0.2)',
-                  background: 'rgba(0, 0, 0, 0.2)',
-                }}
-              >
-                <Typography variant="h5" fontWeight="bold" sx={{ mb: 2 }}>
-                  더 많은 튜토리얼이 준비 중입니다
-                </Typography>
-                <Typography variant="body1" sx={{ mb: 3, maxWidth: '700px', mx: 'auto' }}>
-                  LLM, GPT, AI 기획, 프롬프트 엔지니어링 등 다양한 주제의 튜토리얼이 곧 추가될 예정입니다.
-                  먼저 알림을 받고 싶으시면 이메일을 등록해주세요.
-                </Typography>
-                <Button 
-                  variant="outlined" 
-                  color="primary"
-                  onClick={() => window.location.href = 'mailto:jay@connexionai.kr?subject=AI%20교육%20알림%20신청'}
-                  sx={{ 
-                    px: 3, 
-                    py: 1, 
-                    borderRadius: 2,
-                    borderWidth: 2,
-                    '&:hover': {
-                      borderWidth: 2,
-                    }
-                  }}
-                >
-                  알림 신청하기
-                </Button>
-              </Box>
             </Box>
           </>
         ) : (

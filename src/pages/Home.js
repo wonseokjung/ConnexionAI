@@ -65,8 +65,7 @@ const WaveDivider = ({ flip }) => {
 /* ===========================================
    Navigation Bar
 =========================================== */
-const NavigationBar = () => {
-  const navigate = useNavigate();
+const NavigationBar = ({ navigate }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -77,6 +76,16 @@ const NavigationBar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavigation = (item) => {
+    if (item === 'Home') {
+      navigate('/');
+    } else if (item === 'Education') {
+      navigate('/education');
+    } else {
+      navigate(`/${item.toLowerCase()}`);
+    }
+  };
 
   return (
     <AppBar
@@ -109,9 +118,7 @@ const NavigationBar = () => {
             {['Home', 'About', 'Blog', 'Education'].map((item) => (
               <Typography
                 key={item}
-                onClick={() =>
-                  navigate(item === 'Home' ? '/' : `/${item.toLowerCase()}`)
-                }
+                onClick={() => handleNavigation(item)}
                 sx={{
                   color: 'rgba(255,255,255,0.7)',
                   fontFamily: 'monospace',
@@ -206,10 +213,9 @@ const NavigationBar = () => {
 /* ===========================================
    Hero Section with Animated Text
 =========================================== */
-const HeroSection = () => {
+const HeroSection = ({ navigate }) => {
   const [text, setText] = useState('');
   const fullText = 'CONNEXIONAI';
-  const navigate = useNavigate();
   
   useEffect(() => {
     let currentIndex = 0;
@@ -534,86 +540,110 @@ const HeroSection = () => {
 /* ===========================================
    Services Section
 =========================================== */
-const ServicesSection = () => (
-  <Box sx={{ py: 10, position: 'relative' }}>
-    <Container maxWidth="lg">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <Typography
-          variant="h2"
-          sx={{
-            textAlign: 'center',
-            mb: 2,
-            fontSize: { xs: '2rem', md: '3rem' },
-            fontWeight: 700,
-            color: BRAND_COLORS.white,
-            fontFamily: 'monospace',
-            letterSpacing: '0.1em',
-          }}
-        >
-          AI 자율화 연구개발
-        </Typography>
-        <Typography
-          sx={{
-            textAlign: 'center',
-            mb: 6,
-            color: BRAND_COLORS.slate,
-            fontSize: { xs: '1rem', md: '1.2rem' },
-            fontFamily: 'monospace',
-          }}
-        >
-          기업에 최적화된 AI 에이전트 도입으로 자율화의 새 시대를 열어갑니다
-        </Typography>
-      </motion.div>
+const ServicesSection = ({ navigate }) => {
+  return (
+    <Box component="section" sx={{ py: 12, position: 'relative' }}>
+      <Container maxWidth="xl">
+        <Box sx={{ textAlign: 'center', mb: 8 }}>
+          <Typography 
+            variant="h2"
+            sx={{ 
+              fontWeight: 'bold',
+              mb: 3,
+              background: 'linear-gradient(45deg, #f3ec78, #af4261)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            비즈니스를 위한 AI 솔루션
+          </Typography>
+          <Typography 
+            variant="h6"
+            color="text.secondary"
+            sx={{ 
+              maxWidth: 800, 
+              mx: 'auto',
+              lineHeight: 1.8
+            }}
+          >
+            인공지능 기술을 활용하여 비즈니스 혁신을 추구하는 기업들을 위한
+            맞춤형 솔루션과 전문 컨설팅 서비스를 제공합니다.
+          </Typography>
+        </Box>
 
-      <Grid container spacing={4}>
-        <Grid item xs={12} md={4}>
-          <ServiceCard
-            icon={<FaRobot style={{ fontSize: '2.5rem' }} />}
-            title="자율 AI 에이전트 개발"
-            description="기업 특화 인공지능 에이전트 개발로 업무 프로세스의 자율화를 실현합니다."
-            features={[
-              "업무 프로세스 자동화 에이전트",
-              "의사결정 지원 시스템",
-              "자율 학습형 AI 시스템",
-              "행동 예측형 인공지능"
-            ]}
-          />
+        <Grid container spacing={4} sx={{ mb: 10 }}>
+          <Grid item xs={12} md={6}>
+            <ServiceCard 
+              icon={<GiBrain fontSize="4rem" />}
+              title="AI 비즈니스 컨설팅"
+              description="데이터 기반 비즈니스 혁신과 AI 솔루션 도입을 위한 전략 컨설팅 및 구현 지원 서비스를 제공합니다."
+              features={[
+                "AI 비즈니스 기회 발굴",
+                "AI 구현 로드맵 수립",
+                "LLM 기반 솔루션 설계",
+                "AI 비즈니스 ROI 분석"
+              ]}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <ServiceCard 
+              icon={<MdIntegrationInstructions fontSize="4rem" />}
+              title="맞춤형 AI 솔루션"
+              description="기업 특화 AI 모델 개발부터 AI 에이전트 구축, 데이터 분석 자동화까지 비즈니스 목표 달성을 위한 솔루션을 제공합니다."
+              features={[
+                "AI 에이전트 개발",
+                "비즈니스 프로세스 자동화",
+                "데이터 분석 자동화",
+                "AI 기반 내부 시스템 구축"
+              ]}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <ServiceCard
-            icon={<GiBrain style={{ fontSize: '2.5rem' }} />}
-            title="기업 AI 전환 솔루션"
-            description="기존 기업 시스템에 AI 자율화 기술을 통합하여 디지털 전환을 가속화합니다."
-            features={[
-              "AI 시스템 통합 아키텍처",
-              "레거시 시스템 현대화",
-              "자율형 워크플로우 설계",
-              "ROI 기반 단계적 전환"
-            ]}
-          />
-        </Grid>
-        <Grid item xs={12} md={4}>
-          <ServiceCard
-            icon={<MdIntegrationInstructions style={{ fontSize: '2.5rem' }} />}
-            title="AI 자율화 인프라 구축"
-            description="기업 환경에 최적화된 AI 자율화 인프라 구축으로 지속가능한 혁신을 지원합니다."
-            features={[
-              "클라우드 기반 AI 플랫폼",
-              "MLOps/AIOps 환경 구축",
-              "실시간 데이터 처리 시스템",
-              "AI 모델 모니터링 체계"
-            ]}
-          />
-        </Grid>
-      </Grid>
-    </Container>
-  </Box>
-);
+
+        <Box sx={{ textAlign: 'center', mt: 8 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            onClick={() => window.open('mailto:jay@connexionai.kr', '_blank')}
+            sx={{
+              px: 4, 
+              py: 1.5, 
+              fontSize: { xs: '0.8rem', md: '1rem' },
+              fontWeight: 'bold',
+              borderRadius: 10,
+              boxShadow: '0 4px 14px 0 rgba(0,118,255,0.39)',
+              background: 'linear-gradient(90deg, #0072ff 0%, #00c6ff 100%)',
+              mr: 2
+            }}
+          >
+            AI 자율화 상담
+          </Button>
+          
+          <Button
+            variant="outlined"
+            size="large"
+            onClick={() => navigate('/education')}
+            sx={{
+              px: 4,
+              py: 1.5,
+              fontSize: { xs: '0.8rem', md: '1rem' },
+              fontWeight: 'bold',
+              borderRadius: 10,
+              borderWidth: 2,
+              '&:hover': {
+                borderWidth: 2,
+              }
+            }}
+          >
+            교육 과정 보기
+          </Button>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
 
 const ServiceCard = ({ icon, title, description, features }) => (
   <motion.div
@@ -1112,6 +1142,7 @@ const Footer = () => (
 =========================================== */
 const Home = () => {
   const navigate = useNavigate();
+  
   return (
     <Box
       sx={{
@@ -1121,10 +1152,10 @@ const Home = () => {
         overflow: 'hidden',
       }}
     >
-      <NavigationBar />
-      <HeroSection />
+      <NavigationBar navigate={navigate} />
+      <HeroSection navigate={navigate} />
       <WaveDivider flip={false} />
-      <ServicesSection />
+      <ServicesSection navigate={navigate} />
       <WaveDivider flip={false} />
       <FeaturesSection />
       <WaveDivider flip={true} />
