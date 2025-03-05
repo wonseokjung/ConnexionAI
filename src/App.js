@@ -7,9 +7,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Blog from './pages/Blog';
-import MarketingService from './pages/Marketing';
+// import MarketingService from './pages/Marketing';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import AIAgents from './pages/AIAgents';
+import Education from './pages/Education';
 
 const theme = createTheme({
   palette: {
@@ -85,6 +86,7 @@ const Navigation = () => {
           ConnexionAI
         </Button>
         <Box>
+          {/* AI 에이전트 메뉴 임시 숨김
           <Button 
             color="primary" 
             onClick={() => navigate('/aiagents')}
@@ -92,6 +94,7 @@ const Navigation = () => {
           >
             AI 에이전트
           </Button>
+          */}
           <Button 
             color="primary" 
             onClick={() => navigate('/about')}
@@ -101,11 +104,20 @@ const Navigation = () => {
           </Button>
           <Button 
             color="primary" 
+            onClick={() => navigate('/education')}
+            sx={{ mx: 1 }}
+          >
+            AI 교육
+          </Button>
+          {/* AI 마케팅 메뉴 제거
+          <Button 
+            color="primary" 
             onClick={() => navigate('/marketing')}
             sx={{ mx: 1 }}
           >
             Marketing
           </Button>
+          */}
           <Button 
             color="primary" 
             onClick={() => navigate('/blog')}
@@ -145,7 +157,10 @@ function App() {
           <Route path="/aiagents" element={<AIAgents />} />
           <Route path="/about" element={<About />} />
           <Route path="/blog" element={<Blog />} />
+          {/* Marketing 라우트 제거
           <Route path="/marketing" element={<MarketingService />} />
+          */}
+          <Route path="/education" element={<Education />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

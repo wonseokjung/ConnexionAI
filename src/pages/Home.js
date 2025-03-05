@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Container,
@@ -16,7 +17,6 @@ import {
   Tooltip,
 } from '@mui/material';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
 import { GiBrain } from "react-icons/gi";
 import { MdIntegrationInstructions, MdAutoFixHigh, MdSecurity } from "react-icons/md";
 import { FaRobot, FaNetworkWired, FaDatabase, FaYoutube, FaInstagram } from 'react-icons/fa';
@@ -106,7 +106,7 @@ const NavigationBar = () => {
             CONNEXIONAI
           </Typography>
           <Box sx={{ display: 'flex', gap: 4 }}>
-            {['Home', 'AIAgents', 'About', 'Blog'].map((item) => (
+            {['Home', 'About', 'Blog', 'Education'].map((item) => (
               <Typography
                 key={item}
                 onClick={() =>
@@ -136,7 +136,7 @@ const NavigationBar = () => {
                   },
                 }}
               >
-                {item === 'AIAgents' ? 'AI 에이전트' : item}
+                {item === 'Education' ? 'AI 교육' : item}
               </Typography>
             ))}
           </Box>
@@ -209,6 +209,7 @@ const NavigationBar = () => {
 const HeroSection = () => {
   const [text, setText] = useState('');
   const fullText = 'CONNEXIONAI';
+  const navigate = useNavigate();
   
   useEffect(() => {
     let currentIndex = 0;
@@ -359,30 +360,57 @@ const HeroSection = () => {
             whileHover={{ scale: 1.05, transition: { duration: 0.5 } }}
             whileTap={{ scale: 0.95, transition: { duration: 0.3 } }}
           >
-            <Button
-              variant="contained"
-              size="large"
-              onClick={() => window.location.href = 'mailto:jay@connexionai.kr'}
-              sx={{
-                px: 6,
-                py: 2,
-                fontSize: '1.2rem',
-                fontWeight: 500,
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.5)',
-                color: BRAND_COLORS.white,
-                boxShadow: '0 3px 15px rgba(255, 255, 255, 0.2)',
-                fontFamily: 'monospace',
-                borderRadius: '4px',
-                '&:hover': {
-                  background: 'rgba(255, 255, 255, 0.2)',
-                  boxShadow: '0 5px 20px rgba(255, 255, 255, 0.3)',
-                  transition: 'all 0.5s ease',
-                },
-              }}
-            >
-              AI 자율화 상담
-            </Button>
+            <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <Button
+                variant="contained"
+                size="large"
+                onClick={() => window.location.href = 'mailto:jay@connexionai.kr'}
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  fontSize: { xs: '0.8rem', md: '1rem' },
+                  fontWeight: 500,
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.5)',
+                  color: BRAND_COLORS.white,
+                  boxShadow: '0 3px 15px rgba(255, 255, 255, 0.2)',
+                  fontFamily: 'monospace',
+                  borderRadius: '4px',
+                  '&:hover': {
+                    background: 'rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 5px 20px rgba(255, 255, 255, 0.3)',
+                    transition: 'all 0.5s ease',
+                  },
+                }}
+              >
+                AI 자율화 상담
+              </Button>
+              
+              <Button
+                variant="outlined"
+                size="large"
+                onClick={() => navigate('/education')}
+                sx={{
+                  px: 4,
+                  py: 1.5,
+                  fontSize: { xs: '0.8rem', md: '1rem' },
+                  fontWeight: 500,
+                  background: 'rgba(33, 150, 243, 0.1)',
+                  border: '1px solid rgba(33, 150, 243, 0.5)',
+                  color: '#90caf9',
+                  boxShadow: '0 3px 15px rgba(33, 150, 243, 0.2)',
+                  fontFamily: 'monospace',
+                  borderRadius: '4px',
+                  '&:hover': {
+                    background: 'rgba(33, 150, 243, 0.2)',
+                    boxShadow: '0 5px 20px rgba(33, 150, 243, 0.3)',
+                    transition: 'all 0.5s ease',
+                  },
+                }}
+              >
+                AI 교육 살펴보기
+              </Button>
+            </Box>
           </motion.div>
         </Box>
       </Container>
@@ -1083,6 +1111,7 @@ const Footer = () => (
    Main Component
 =========================================== */
 const Home = () => {
+  const navigate = useNavigate();
   return (
     <Box
       sx={{
