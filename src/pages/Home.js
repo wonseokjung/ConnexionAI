@@ -19,7 +19,7 @@ import {
 import { motion } from 'framer-motion';
 import { GiBrain } from "react-icons/gi";
 import { MdIntegrationInstructions, MdAutoFixHigh, MdSecurity } from "react-icons/md";
-import { FaRobot, FaNetworkWired, FaDatabase, FaYoutube, FaInstagram } from 'react-icons/fa';
+import { FaNetworkWired, FaDatabase, FaYoutube, FaInstagram } from 'react-icons/fa';
 
 // Brand colors
 const BRAND_COLORS = {

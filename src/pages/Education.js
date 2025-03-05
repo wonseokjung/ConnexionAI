@@ -13,18 +13,16 @@ import {
   Tab,
   Divider,
   useTheme,
-  useMediaQuery,
   Paper,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Avatar,
-  IconButton,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FaVideo, FaDownload, FaPlay, FaCode, FaFilePdf, FaGithub } from 'react-icons/fa';
+import { FaDownload, FaPlay, FaCode, FaFilePdf, FaGithub } from 'react-icons/fa';
 import { MdSchool, MdFilterNone, MdCheck, MdArrowBack, MdNotifications } from 'react-icons/md';
 
 // 교육 코스 데이터
@@ -308,8 +306,6 @@ const CourseCard = ({ course, onClick }) => {
     triggerOnce: true
   });
 
-  const theme = useTheme();
-
   return (
     <motion.div 
       ref={ref}
@@ -320,19 +316,20 @@ const CourseCard = ({ course, onClick }) => {
       <Card 
         elevation={3} 
         onClick={() => onClick(course)}
-        sx={{
-          height: '100%',
-          display: 'flex',
+        sx={{ 
+          height: '100%', 
+          display: 'flex', 
           flexDirection: 'column',
-          cursor: 'pointer',
-          borderRadius: 2,
-          overflow: 'hidden',
-          transition: 'transform 0.3s, box-shadow 0.3s',
-          bgcolor: 'background.paper',
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease',
           '&:hover': {
             transform: 'translateY(-8px)',
-            boxShadow: '0 12px 20px rgba(0, 0, 0, 0.2)'
-          }
+            boxShadow: '0 12px 20px rgba(0, 0, 0, 0.2)',
+          },
+          borderRadius: 2,
+          overflow: 'hidden',
+          background: 'rgba(30, 30, 30, 0.6)',
+          backdropFilter: 'blur(10px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
         }}
       >
         <Box sx={{ position: 'relative' }}>
@@ -467,8 +464,6 @@ const CourseCard = ({ course, onClick }) => {
 // 코스 상세 보기 컴포넌트
 const CourseDetail = ({ course, onBack }) => {
   const [tabValue, setTabValue] = useState(0);
-  
-  const theme = useTheme();
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
