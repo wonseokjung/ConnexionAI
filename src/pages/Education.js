@@ -12,7 +12,6 @@ import {
   Tabs,
   Tab,
   Divider,
-  useTheme,
   Paper,
   List,
   ListItem,
