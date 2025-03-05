@@ -679,7 +679,7 @@ const CourseDetail = ({ course, onBack }) => {
                       color="primary"
                       startIcon={<FaDownload />}
                       component="a"
-                      href="/downloads/이미지분석실습.ipynb"
+                      href={`${process.env.PUBLIC_URL}/downloads/이미지분석실습.ipynb`}
                       target="_blank"
                       download
                       sx={{ mr: 2 }}
@@ -1036,7 +1036,7 @@ const CourseDetail = ({ course, onBack }) => {
                       },
                     }}
                     component="a"
-                    href={item.url}
+                    href={`${process.env.PUBLIC_URL}${item.url}`}
                     target="_blank"
                   >
                     <Typography variant="body2" noWrap>{item.name}</Typography>
