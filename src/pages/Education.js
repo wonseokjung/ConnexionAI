@@ -23,6 +23,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { FaDownload, FaPlay, FaCode, FaFilePdf, FaGithub } from 'react-icons/fa';
 import { MdSchool, MdFilterNone, MdCheck, MdArrowBack, MdNotifications } from 'react-icons/md';
+import NavigationBar from '../components/layout/NavigationBar';
 
 // 교육 코스 데이터
 const courses = [
@@ -950,15 +951,13 @@ const Education = () => {
       });
 
   return (
-    <Box 
-      sx={{ 
-        minHeight: '100vh',
-        background: 'white',
-        color: 'text.primary',
-        pt: { xs: 12, md: 14 },
-        pb: 10,
-      }}
-    >
+    <Box sx={{ 
+      minHeight: '100vh',
+      bgcolor: 'background.default',
+      pt: { xs: 8, md: 10 },
+      pb: 8
+    }}>
+      <NavigationBar />
       <Container maxWidth="lg">
         {!selectedCourse ? (
           <>

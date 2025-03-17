@@ -6,11 +6,13 @@ import { AppBar, Toolbar, Button, Box, useScrollTrigger, Slide } from '@mui/mate
 import { useLocation, useNavigate } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
+import LabPage from './pages/Lab';
 // import Blog from './pages/Blog';
 // import MarketingService from './pages/Marketing';
 import PrivacyPolicy from './pages/PrivacyPolicy';
-import AIAgents from './pages/AIAgents';
+// import AIAgents from './pages/AIAgents';
 import Education from './pages/Education';
+import LectureDetail from './pages/Lab_classes/openai_agent';
 
 // Define theme with more structured approach - AI 교육에 초점
 let theme = createTheme({
@@ -166,125 +168,18 @@ function HideOnScroll(props) {
   );
 }
 
-// Navigation component
-const Navigation = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const isHomePage = location.pathname === '/';
-
-  // Don't show navbar on homepage
-  if (isHomePage) return null;
-
-  return (
-    <HideOnScroll>
-      <AppBar 
-        position="fixed" 
-        color="transparent" 
-        sx={{ 
-          background: 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'blur(10px)',
-          borderBottom: '1px solid rgba(0, 0, 0, 0.1)'
-        }}
-      >
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
-          <Button 
-            onClick={() => navigate('/')}
-            sx={{ 
-              fontSize: '1.2rem', 
-              fontWeight: 700,
-              fontFamily: "'Fira Code', 'Source Code Pro', monospace",
-              background: theme.palette.gradient.primary,
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              '&:hover': {
-                backgroundColor: 'transparent',
-                opacity: 0.8,
-                transform: 'scale(1.05)',
-              },
-              transition: 'all 0.3s ease',
-            }}
-          >
-            Connect AI LAB
-          </Button>
-          <Box sx={{ 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: { xs: 1, sm: 2 } 
-          }}>
-            {/* AI 에이전트 메뉴 임시 숨김
-            <Button 
-              onClick={() => navigate('/aiagents')}
-            >
-              AI 에이전트
-            </Button>
-            */}
-            <Button 
-              onClick={() => navigate('/about')}
-              sx={{ 
-                color: 'rgba(0, 0, 0, 0.7)',
-                '&:hover': {
-                  color: theme.palette.primary.main,
-                  backgroundColor: 'rgba(59, 130, 246, 0.05)',
-                }
-              }}
-            >
-              About
-            </Button>
-            <Button 
-              onClick={() => navigate('/education')}
-              sx={{ 
-                color: 'rgba(0, 0, 0, 0.7)',
-                '&:hover': {
-                  color: theme.palette.primary.main,
-                  backgroundColor: 'rgba(59, 130, 246, 0.05)',
-                }
-              }}
-            >
-              클래스
-            </Button>
-            {/* AI 마케팅 메뉴 제거
-            <Button 
-              onClick={() => navigate('/marketing')}
-            >
-              Marketing
-            </Button>
-            */}
-            <Button 
-              variant="contained" 
-              color="primary"
-              onClick={() => navigate('/education')}
-              sx={{ 
-                ml: { xs: 1, sm: 2 },
-                background: theme.palette.gradient.primary,
-                color: 'white',
-                borderRadius: '20px',
-                '&:hover': {
-                  background: theme.palette.gradient.primary,
-                  boxShadow: '0 4px 10px rgba(59, 130, 246, 0.3)',
-                  transform: 'translateY(-2px)',
-                }
-              }}
-            >
-              무료 클래스 시작
-            </Button>
-          </Box>
-        </Toolbar>
-      </AppBar>
-    </HideOnScroll>
-  );
-};
-
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/aiagents" element={<AIAgents />} />
+          {/* <Route path="/aiagents" element={<AIAgents />} /> */}
           <Route path="/about" element={<About />} />
+          <Route path="/lab" element={<LabPage />} />
+          <Route path="/lab/openai_agent" element={<LectureDetail />} />
+          <Route path="/lab/openai_agent/:sectionId" element={<LectureDetail />} />
           {/* <Route path="/blog" element={<Blog />} /> - 블로그 라우트 제거 */}
           {/* Marketing 라우트 제거
           <Route path="/marketing" element={<MarketingService />} />

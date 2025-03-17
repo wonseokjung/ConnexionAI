@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
-import { Box, Container, Typography, Grid, Paper, Tabs, Tab, Avatar, Chip, Divider, Button } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Box, Container, Typography, Grid, Paper, Tabs, Tab, Avatar, Chip, Divider, Button, AppBar, Toolbar, IconButton, List, ListItem, useTheme, useMediaQuery } from '@mui/material';
 import { motion } from 'framer-motion';
+import { MdClose, MdMenu } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import NavigationBar from '../components/layout/NavigationBar';
 
 const education = [
   {
@@ -94,7 +97,13 @@ const About = () => {
   };
 
   const renderProfile = () => (
-    <Box sx={{ py: 6 }}>
+    <Box sx={{ 
+      py: 6,
+      background: 'linear-gradient(135deg, #000000 0%, #111111 100%)',
+      color: '#fff',
+      borderRadius: '20px',
+      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+    }}>
       <Grid container spacing={6} alignItems="center">
         <Grid item xs={12} md={4}>
           <motion.div
@@ -111,9 +120,10 @@ const About = () => {
                 maxWidth: 350,
                 height: 'auto',
                 borderRadius: '20px',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
                 mx: 'auto',
                 display: 'block',
+                border: '1px solid rgba(255, 215, 0, 0.3)',
               }}
             />
           </motion.div>
@@ -129,7 +139,7 @@ const About = () => {
               gutterBottom 
               sx={{ 
                 fontWeight: 700,
-                color: '#000000',
+                color: '#FFD700',
                 mb: 2,
               }}
             >
@@ -138,7 +148,7 @@ const About = () => {
             <Typography 
               variant="h6" 
               sx={{ 
-                color: 'rgba(0, 0, 0, 0.8)',
+                color: 'rgba(255, 255, 255, 0.9)',
                 mb: 3,
                 fontWeight: 300,
               }}
@@ -149,7 +159,7 @@ const About = () => {
             <Typography 
               variant="body1" 
               sx={{ 
-                color: 'rgba(0, 0, 0, 0.7)',
+                color: 'rgba(255, 255, 255, 0.8)',
                 mb: 4,
                 lineHeight: 1.8,
               }}
@@ -163,7 +173,7 @@ const About = () => {
             <Typography 
               variant="h6" 
               sx={{ 
-                color: '#000000',
+                color: '#FFD700',
                 mb: 2,
                 fontWeight: 600,
               }}
@@ -264,251 +274,332 @@ const About = () => {
   );
 
   const renderEducation = () => (
-    <Grid container spacing={4}>
-      {education.map((edu, index) => (
-        <Grid item xs={12} md={6} key={index}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-          >
-            <Paper
-              elevation={1}
-              sx={{
-                p: 4,
-                height: '100%',
-                background: 'white',
-                borderRadius: '20px',
-                border: '1px solid rgba(0, 0, 0, 0.1)',
-                transition: 'all 0.3s ease-in-out',
-                '&:hover': {
-                  transform: 'translateY(-5px)',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                },
-              }}
-            >
+    <Box sx={{ 
+      py: 6,
+      background: 'linear-gradient(135deg, #000000 0%, #111111 100%)',
+      color: '#fff',
+      borderRadius: '20px',
+      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+    }}>
+      <Typography 
+        variant="h4" 
+        gutterBottom
+        sx={{ 
+          fontWeight: 700,
+          color: '#FFD700',
+          mb: 4,
+        }}
+      >
+        학력 및 전문 교육
+      </Typography>
+      
+      {education.map((item, index) => (
+        <Box key={index} sx={{ mb: 4 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={3}>
               <Typography 
-                variant="h5" 
-                gutterBottom 
+                variant="subtitle1"
                 sx={{ 
                   fontWeight: 600,
-                  color: '#000000',
+                  color: '#FFD700',
                 }}
               >
-                {edu.school}
+                {item.year}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={9}>
+              <Typography 
+                variant="h6"
+                sx={{ 
+                  fontWeight: 600,
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  mb: 1,
+                }}
+              >
+                {item.school}
               </Typography>
               <Typography 
+                variant="subtitle1"
                 sx={{ 
-                  color: 'rgba(0, 0, 0, 0.8)',
+                  fontWeight: 500,
+                  fontStyle: 'italic',
+                  color: 'rgba(255, 215, 0, 0.8)',
                   mb: 2,
                 }}
               >
-                {edu.degree} ({edu.year})
+                {item.degree}
               </Typography>
-              <Typography sx={{ color: 'rgba(0, 0, 0, 0.7)' }}>
-                {edu.description}
+              <Typography 
+                variant="body1"
+                sx={{ 
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  mb: 2,
+                }}
+              >
+                {item.description}
               </Typography>
-            </Paper>
-          </motion.div>
-        </Grid>
+              {index < education.length - 1 && (
+                <Divider sx={{ mt: 3, mb: 4, borderColor: 'rgba(255, 215, 0, 0.3)' }} />
+              )}
+            </Grid>
+          </Grid>
+        </Box>
       ))}
-    </Grid>
+    </Box>
   );
 
   const renderAchievements = () => (
-    <Box>
-      {achievements.map((achievement, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.1 }}
-        >
-          <Paper
-            elevation={1}
-            sx={{
-              p: 4,
-              mb: 3,
-              background: 'white',
-              borderRadius: '20px',
-              border: '1px solid rgba(0, 0, 0, 0.1)',
-              transition: 'all 0.3s ease-in-out',
-              '&:hover': {
-                transform: 'translateY(-5px)',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-              },
-            }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={2}>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: { xs: 'flex-start', md: 'center' },
-                  }}
-                >
-                  <Typography
-                    variant="h4"
-                    sx={{
-                      fontWeight: 700,
-                      color: '#4776E6',
-                      mb: 1,
-                    }}
-                  >
-                    {achievement.year}
-                  </Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={10}>
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    color: '#000000',
-                    mb: 1,
-                    fontWeight: 500,
-                  }}
-                >
-                  {achievement.content}
-                </Typography>
-                <Typography sx={{ color: 'rgba(0, 0, 0, 0.7)' }}>
-                  {achievement.description}
-                </Typography>
-              </Grid>
+    <Box sx={{ 
+      py: 6,
+      background: 'linear-gradient(135deg, #000000 0%, #111111 100%)',
+      color: '#fff',
+      borderRadius: '20px',
+      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+    }}>
+      <Typography 
+        variant="h4" 
+        gutterBottom
+        sx={{ 
+          fontWeight: 700,
+          color: '#FFD700',
+          mb: 4,
+        }}
+      >
+        주요 성과 및 경력
+      </Typography>
+      
+      {achievements.map((item, index) => (
+        <Box key={index} sx={{ mb: 4 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={3}>
+              <Typography 
+                variant="subtitle1"
+                sx={{ 
+                  fontWeight: 600,
+                  color: '#FFD700',
+                }}
+              >
+                {item.year}
+              </Typography>
             </Grid>
-          </Paper>
-        </motion.div>
+            <Grid item xs={12} sm={9}>
+              <Typography 
+                variant="h6"
+                sx={{ 
+                  fontWeight: 600,
+                  color: 'rgba(255, 255, 255, 0.9)',
+                  mb: 1,
+                }}
+              >
+                {item.content}
+              </Typography>
+              <Typography 
+                variant="body1"
+                sx={{ 
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  mb: 2,
+                }}
+              >
+                {item.description}
+              </Typography>
+              {index < achievements.length - 1 && (
+                <Divider sx={{ mt: 3, mb: 4, borderColor: 'rgba(255, 215, 0, 0.3)' }} />
+              )}
+            </Grid>
+          </Grid>
+        </Box>
       ))}
     </Box>
   );
 
   const renderMedia = () => (
-    <Grid container spacing={4}>
-      {media.map((item, index) => (
-        <Grid item xs={12} md={4} key={index}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.2 }}
-          >
-            <Paper
-              elevation={1}
-              sx={{
-                height: '100%',
-                background: 'white',
-                borderRadius: '20px',
-                border: '1px solid rgba(0, 0, 0, 0.1)',
-                overflow: 'hidden',
-                transition: 'all 0.3s ease-in-out',
-                '&:hover': {
-                  transform: 'translateY(-5px)',
-                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
-                },
-              }}
+    <Box sx={{ 
+      py: 6,
+      background: 'linear-gradient(135deg, #000000 0%, #111111 100%)',
+      color: '#fff',
+      borderRadius: '20px',
+      boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)'
+    }}>
+      <Typography 
+        variant="h4" 
+        gutterBottom
+        sx={{ 
+          fontWeight: 700,
+          color: '#FFD700',
+          mb: 4,
+        }}
+      >
+        미디어 & 뉴스
+      </Typography>
+      
+      <Grid container spacing={4}>
+        {media.map((item, index) => (
+          <Grid item xs={12} md={4} key={index}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
             >
-              <Box
+              <Paper
+                elevation={1}
                 sx={{
-                  width: '100%',
-                  height: 200,
-                  backgroundImage: `url(${item.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
+                  height: '100%',
+                  background: 'rgba(15, 15, 15, 0.6)',
+                  backdropFilter: 'blur(10px)',
+                  borderRadius: '20px',
+                  border: '1px solid rgba(255, 215, 0, 0.1)',
+                  overflow: 'hidden',
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    transform: 'translateY(-5px)',
+                    boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                    borderColor: 'rgba(255, 215, 0, 0.3)'
+                  },
                 }}
-              />
-              <Box sx={{ p: 4 }}>
-                <Typography 
-                  sx={{ 
-                    fontWeight: 600,
-                    color: '#000000',
-                    mb: 1,
+              >
+                <Box
+                  sx={{
+                    width: '100%',
+                    height: 200,
+                    backgroundImage: `url(${item.image})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                   }}
-                >
-                  {item.title}
-                </Typography>
-                <Typography sx={{ color: 'rgba(0, 0, 0, 0.7)', mb: 2 }}>
-                  {item.content}
-                </Typography>
-                <Button 
-                  variant="outlined" 
-                  color="primary"
-                  href={item.link} 
-                  target="_blank"
-                  sx={{ 
-                    borderRadius: '20px',
-                    textTransform: 'none',
-                  }}
-                >
-                  자세히 보기
-                </Button>
-              </Box>
-            </Paper>
-          </motion.div>
-        </Grid>
-      ))}
-    </Grid>
+                />
+                <Box sx={{ p: 4 }}>
+                  <Typography 
+                    sx={{ 
+                      fontWeight: 600,
+                      color: '#FFD700',
+                      mb: 1,
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
+                  <Typography sx={{ color: 'rgba(255, 255, 255, 0.8)', mb: 2 }}>
+                    {item.content}
+                  </Typography>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 3 }}>
+                    <Chip 
+                      label={item.category} 
+                      size="small"
+                      sx={{ 
+                        backgroundColor: 'rgba(255, 215, 0, 0.1)',
+                        color: '#FFD700',
+                        fontWeight: 500,
+                        fontSize: '0.8rem',
+                        borderRadius: '4px',
+                        border: '1px solid rgba(255, 215, 0, 0.3)',
+                      }}
+                    />
+                    <Typography sx={{ fontSize: '0.85rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+                      {item.date}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Paper>
+            </motion.div>
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
   );
 
   return (
-    <Box sx={{ background: 'white', color: '#000000', minHeight: '100vh' }}>
-      <Container maxWidth="lg" sx={{ py: 12 }}>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
+    <Box sx={{ 
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #000000 0%, #191919 100%)',
+      pt: { xs: 10, sm: 12 },
+      pb: 8 
+    }}>
+      <NavigationBar />
+      
+      <Container maxWidth="lg">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
         >
-          <Paper
-            elevation={0}
-            sx={{
-              p: 6,
-              mb: 6,
-              background: 'white',
-              borderRadius: '20px',
-              border: '1px solid rgba(0, 0, 0, 0.1)',
+          <Typography 
+            variant="h2" 
+            align="center" 
+            gutterBottom
+            sx={{ 
+              fontWeight: 700,
+              color: '#FFD700',
+              fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' },
+              mb: 4,
+              '&::after': {
+                content: '""',
+                display: 'block',
+                width: '80px',
+                height: '4px',
+                background: 'linear-gradient(90deg, #FFD700, #FFC107)',
+                margin: '0.8rem auto',
+              }
             }}
           >
-            <Typography
-              sx={{
-                color: '#000000',
-                fontSize: '1.2rem',
-                lineHeight: 1.7,
-              }}
-            >
-              Connect AI LAB은 실용적이고 효과적인 AI 교육을 제공하는 전문 교육 플랫폼입니다.
-              초보자부터 전문가까지 모든 수준의 학습자를 위한 맞춤형 AI 교육 과정을 개발하고,
-              실무에 바로 적용할 수 있는 실용적인 AI 기술 교육을 통해 AI 인재 양성에 기여하고 있습니다.
-            </Typography>
-          </Paper>
-
+            소개
+          </Typography>
+          <Typography 
+            variant="h6" 
+            align="center" 
+            sx={{ 
+              mb: 6,
+              color: 'rgba(255, 255, 255, 0.8)',
+              maxWidth: '800px',
+              mx: 'auto',
+              lineHeight: 1.7,
+            }}
+          >
+            AI 개발과 교육을 통해 기술의 미래를 선도하고 인재를 양성하는 커넥션AI 연구소를 소개합니다.
+          </Typography>
+        </motion.div>
+        
+        {/* Tabs */}
+        <Paper 
+          elevation={0} 
+          sx={{ 
+            mb: 5,
+            background: 'rgba(10, 10, 10, 0.8)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '10px',
+            border: '1px solid rgba(255, 215, 0, 0.2)',
+          }}
+        >
           <Tabs 
             value={currentTab} 
-            onChange={handleTabChange}
+            onChange={handleTabChange} 
+            variant="fullWidth"
             sx={{
-              mb: 6,
               '& .MuiTabs-indicator': {
-                backgroundColor: '#4776E6',
-                height: '3px',
-                borderRadius: '3px',
+                backgroundColor: '#FFD700',
+                height: 3,
               },
               '& .MuiTab-root': {
-                color: 'rgba(0, 0, 0, 0.7)',
-                fontSize: '1.1rem',
+                color: 'rgba(255, 255, 255, 0.7)',
                 '&.Mui-selected': {
-                  color: '#4776E6',
-                },
-              },
+                  color: '#FFD700',
+                  fontWeight: 600,
+                }
+              }
             }}
           >
             <Tab label="프로필" />
             <Tab label="학력" />
-            <Tab label="경력" />
+            <Tab label="주요 성과" />
             <Tab label="미디어" />
           </Tabs>
-
+        </Paper>
+        
+        {/* Tab Panels */}
+        <Box>
           {currentTab === 0 && renderProfile()}
           {currentTab === 1 && renderEducation()}
           {currentTab === 2 && renderAchievements()}
           {currentTab === 3 && renderMedia()}
-        </motion.div>
+        </Box>
       </Container>
     </Box>
   );
