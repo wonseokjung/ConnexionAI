@@ -33,10 +33,10 @@ const Lab = () => {
   // OpenAI Agent 강의 데이터
   const agentCourse = {
     id: 1,
-    title: "[실전 AI] OpenAI Agent SDK로 강력한 AI 에이전트 만들기",
-    description: "이 강의에서는 OpenAI의 새로운 Agent SDK를 활용하여 자율적인 AI 에이전트를 구축하는 방법을 배웁니다. 실제 프로젝트로 이론과 실습을 함께 진행합니다.",
-    thumbnail: "https://images.unsplash.com/photo-1682687982049-b3d433368cd1?q=80&w=1771&auto=format&fit=crop",
-    duration: "1시간 12분",
+    title: "[비즈니스 AI] OpenAI Agent로 혁신적인 비즈니스 AI 서비스 개발하기",
+    description: "이 강의에서는 OpenAI Agent SDK를 활용하여 실제 비즈니스 문제를 해결하는 AI 서비스를 개발하는 방법을 배웁니다. 기업용 AI 솔루션 구축부터 배포까지 실무 중심으로 진행합니다.",
+    thumbnail: "/images/aiagentclass.png",
+    duration: "3시간 29분",
     uploadDate: "2024-06-15",
     views: "8.3만",
     author: "Connect AI LAB",
@@ -144,7 +144,7 @@ const Lab = () => {
                 gap: 1,
               }}
             >
-              <FaRobot /> AI 에이전트 과정
+              <FaRobot /> 비즈니스 AI 서비스 과정
             </Typography>
           </Box>
           
@@ -228,7 +228,7 @@ const Lab = () => {
                   <Box sx={{ position: 'absolute', top: 16, left: 16, display: 'flex', gap: 1 }}>
                     <Chip 
                       size="small" 
-                      label="AI 에이전트" 
+                      label="비즈니스 AI" 
                       sx={{ 
                         backgroundColor: 'rgba(255, 215, 0, 0.2)',
                         color: '#FFD700',

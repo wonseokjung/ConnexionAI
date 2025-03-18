@@ -54,11 +54,11 @@ const LectureDetail = () => {
   // OpenAI Agent 강의 데이터
   const agentCourse = {
     id: 1,
-    title: "OpenAI Agent SDK로 강력한 AI 에이전트 만들기",
-    description: "이 강의에서는 OpenAI의 새로운 Agent SDK를 활용하여 자율적인 AI 에이전트를 구축하는 방법을 배웁니다. 실제 프로젝트로 이론과 실습을 함께 진행합니다.",
-    longDescription: "OpenAI의 Agent SDK는 GPT-4 모델을 기반으로 자율적인 의사결정과 행동이 가능한 AI 에이전트를 손쉽게 구축할 수 있는 최신 도구입니다. 이 강의에서는 SDK의 기본 개념부터 고급 응용까지 단계별로 알아봅니다.\n\n강의를 통해 자율적인 의사결정, 도구 사용, 멀티턴 대화, 메모리 관리 등의 기능을 갖춘 강력한 AI 에이전트를 만드는 방법을 배우게 됩니다. 실제 프로젝트를 함께 구현하면서 이론과 실습을 병행하여 효과적으로 학습할 수 있습니다.\n\n초보자부터 AI 개발 경험이 있는 중급자까지 모두 들을 수 있도록 구성되어 있으며, Python 기본 지식만 있으면 충분합니다.",
-    thumbnail: "https://images.unsplash.com/photo-1682687982049-b3d433368cd1?q=80&w=1771&auto=format&fit=crop",
-    duration: "1시간 12분",
+    title: "[비즈니스 AI] OpenAI Agent로 혁신적인 비즈니스 AI 서비스 개발하기",
+    description: "이 강의에서는 OpenAI Agent SDK를 활용하여 실제 비즈니스 문제를 해결하는 AI 서비스를 개발하는 방법을 배웁니다. 기업용 AI 솔루션 구축부터 배포까지 실무 중심으로 진행합니다.",
+    longDescription: "OpenAI의 Agent SDK는 GPT-4 모델을 기반으로 자율적인 의사결정과 행동이 가능한 AI 에이전트를 손쉽게 구축할 수 있는 최신 도구입니다. 이 강의에서는 비즈니스 환경에서 이를 활용하여 실질적인 가치를 창출하는 방법을 배웁니다.\n\n강의를 통해 고객 서비스 자동화, 데이터 분석 자동화, 의사결정 지원 시스템 등 다양한 비즈니스 AI 서비스를 개발하는 방법을 배우게 됩니다. 실제 기업 사례를 기반으로 한 프로젝트를 함께 구현하면서 이론과 실습을 병행하여 효과적으로 학습할 수 있습니다.\n\n초보자부터 AI 개발 경험이 있는 중급자까지 모두 들을 수 있도록 구성되어 있으며, Python 기본 지식만 있으면 충분합니다.",
+    thumbnail: "/images/aiagentclass.png",
+    duration: "3시간 29분",
     uploadDate: "2024-06-15",
     views: "8.3만",
     author: "Connect AI LAB",
@@ -83,11 +83,11 @@ const LectureDetail = () => {
     sections: [
       {
         id: 101,
-        title: "Manus AI: 세계 최초의 자율형 AI 에이전트",
+        title: "비즈니스 AI 혁명: OpenAI Agent의 기업 활용 사례",
         duration: "18:45",
-        description: "OpenAI의 새로운 Agent SDK를 소개하고, 기존의 Assistant API와 어떻게 다른지, 어떤 새로운 기능을 제공하는지 살펴봅니다.",
+        description: "OpenAI Agent가 비즈니스 환경에서 어떻게 활용되고 있는지 살펴보고, 기업들이 이를 통해 얻을 수 있는 경쟁 우위와 혁신 사례를 분석합니다.",
         videoId: "M1w6r1G0cbQ",
-        notes: "이 강의에서는 OpenAI Agent SDK의 주요 기능과 특징을 살펴보고, 기존의 Assistant API와 어떻게 다른지 비교합니다. 자율 에이전트의 개념과 미래 발전 방향에 대해서도 논의합니다.",
+        notes: "이 강의에서는 OpenAI Agent SDK의 비즈니스 활용 사례와 성공 사례를 살펴봅니다. 고객 서비스, 데이터 분석, 의사결정 지원 등 다양한 분야에서 AI 에이전트가 어떻게 기업 가치를 창출하는지 알아봅니다.",
         resources: [
           {
             name: "1_Setting_API.ipynb 실습파일",
@@ -99,14 +99,14 @@ const LectureDetail = () => {
       },
       {
         id: 102,
-        title: "OpenAI AI Agent로 만들기 첫걸음",
-        duration: "24:30",
-        description: "Agent SDK를 설치하고 기본적인 에이전트를 만드는 과정을 단계별로 알아봅니다. 에이전트의 기본 구성 요소와 설정 방법을 배웁니다.",
+        title: "Responses API 기초 다지기",
+        duration: "22:30",
+        description: "Responses API의 기본 개념과 기존 API와의 차이점을 알아보고, 간단한 코드로 첫 번째 에이전트를 만드는 방법을 배웁니다.",
         videoId: "assistant-intro",
-        notes: "이 강의에서는 Agent SDK의 설치 방법부터 시작하여 기본적인 에이전트를 만드는 과정을 단계별로 알아봅니다. 에이전트의 기본 구성 요소인 모델 설정, 도구 연결, 메모리 관리 등에 대해 자세히 설명합니다.",
+        notes: "이 강의에서는 Responses API가 기존 API와 어떻게 다른지 비교하고, 코드 몇 줄로 첫 번째 에이전트를 만드는 방법을 배웁니다. API 호출 방식과 기본 구조를 이해하고, 간단한 질의응답 에이전트를 구현하는 실습을 진행합니다.",
         resources: [
           {
-            name: "Agent SDK 설치 가이드",
+            name: "Responses API 가이드",
             type: "document",
             size: "280KB",
             url: "https://opct.blob.core.windows.net/lecture-openai-aiagent/agent_sdk_installation.pdf?sp=r&st=2025-03-17T08:32:59Z&se=2025-03-17T16:32:59Z&sv=2022-11-02&sr=b&sig=QsKL%2FBxkcCwicJTXSRY7hFRU6xCJimltg0YYXjn5l5g%3D"
@@ -121,20 +121,20 @@ const LectureDetail = () => {
       },
       {
         id: 103,
-        title: "에이전트에 도구(Tools) 연결하기",
-        duration: "28:42",
-        description: "Agent SDK에서 제공하는 다양한 도구들을 에이전트에 연결하고 활용하는 방법을 배웁니다. 웹 검색, 코드 실행, 파일 처리 등의 도구를 구현합니다.",
+        title: "웹 검색 도구 활용하기",
+        duration: "24:15",
+        description: "웹 검색 도구의 작동 방식과 장점을 소개하고, 실시간 정보를 활용한 에이전트 구축 방법과 정확한 인용 및 출처 표시 방법을 배웁니다.",
         videoId: "assistant-python",
-        notes: "이 강의에서는 Agent SDK에서 제공하는 다양한 도구들을 에이전트에 연결하고 활용하는 방법을 배웁니다. 웹 검색, 코드 실행, 파일 처리 등의 도구를 구현하고, 에이전트가 이를 자율적으로 사용하도록 설정하는 방법을 알아봅니다.",
+        notes: "이 강의에서는 웹 검색 도구의 작동 방식과 장점을 소개하고, 실시간 정보를 활용한 에이전트를 구축하는 방법을 배웁니다. 정확한 인용과 출처 표시 방법을 익히고, 뉴스 요약 또는 리서치 에이전트를 만드는 실습을 진행합니다.",
         resources: [
           {
-            name: "도구 연결 노트북",
+            name: "웹 검색 도구 노트북",
             type: "notebook",
             size: "145KB",
             url: "/notebooks/agent_tools.ipynb"
           },
           {
-            name: "도구 구현 코드",
+            name: "뉴스 요약 에이전트 코드",
             type: "code",
             size: "32KB",
             url: "/code/agent_tools.py"
@@ -143,29 +143,123 @@ const LectureDetail = () => {
       },
       {
         id: 104,
-        title: "에이전트 메모리 및 의사결정 관리",
-        duration: "31:18",
-        description: "에이전트의 메모리 관리와 의사결정 프로세스를 구현하는 방법을 배웁니다. 장기 기억, 컨텍스트 관리, 의사결정 전략 등을 다룹니다.",
+        title: "파일 검색 도구로 지식 기반 에이전트 만들기",
+        duration: "26:40",
+        description: "문서에서 정보를 찾고 답변하는 RAG 시스템을 이해하고, 벡터 스토어 생성 및 관리 방법과 효과적인 문서 기반 에이전트 설계 원칙을 배웁니다.",
         videoId: "assistant-tools",
-        notes: "이 강의에서는 에이전트의 메모리 관리와 의사결정 프로세스를 구현하는 방법을 배웁니다. 장기 기억, 컨텍스트 관리, 의사결정 전략 등을 다루며, 에이전트가 복잡한 작업을 수행할 때 필요한 기억력과 판단력을 향상시키는 방법을 알아봅니다.",
+        notes: "이 강의에서는 문서에서 정보를 찾고 답변하는 RAG(Retrieval-Augmented Generation) 시스템의 원리를 이해하고, 벡터 스토어 생성 및 관리 방법을 배웁니다. 효과적인 문서 기반 에이전트 설계 원칙을 익히고, 기업 FAQ 문서를 활용한 고객 지원 에이전트를 구현하는 실습을 진행합니다.",
         resources: [
           {
-            name: "메모리 관리 노트북",
+            name: "RAG 시스템 노트북",
             type: "notebook",
             size: "168KB",
             url: "/notebooks/agent_memory.ipynb"
           },
           {
-            name: "의사결정 예제 코드",
+            name: "벡터 스토어 예제 코드",
             type: "code",
             size: "28KB",
             url: "/code/decision_making.py"
           },
           {
-            name: "메모리 관리 참조 문서",
+            name: "문서 기반 에이전트 가이드",
             type: "document",
             size: "420KB",
             url: "/docs/memory_management.pdf"
+          }
+        ]
+      },
+      {
+        id: 105,
+        title: "컴퓨터 사용 도구로 자동화 시스템 구축하기",
+        duration: "28:20",
+        description: "컴퓨터 사용 도구의 가능성과 제한점을 탐색하고, 브라우저 기반 자동화 태스크 설계 및 안전한 컴퓨터 제어 에이전트 개발 가이드라인을 배웁니다.",
+        videoId: "computer-tools",
+        notes: "이 강의에서는 컴퓨터 사용 도구의 가능성과 제한점을 탐색하고, 브라우저 기반 자동화 태스크를 설계하는 방법을 배웁니다. 안전한 컴퓨터 제어 에이전트 개발 가이드라인을 익히고, 간단한 웹 탐색 및 정보 수집 에이전트를 구현하는 실습을 진행합니다.",
+        resources: [
+          {
+            name: "컴퓨터 제어 노트북",
+            type: "notebook",
+            size: "156KB",
+            url: "/notebooks/computer_control.ipynb"
+          },
+          {
+            name: "자동화 에이전트 코드",
+            type: "code",
+            size: "42KB",
+            url: "/code/automation_agent.py"
+          }
+        ]
+      },
+      {
+        id: 106,
+        title: "Agents SDK로 복잡한 워크플로우 구축하기",
+        duration: "32:15",
+        description: "멀티 에이전트 시스템 아키텍처 설계, 에이전트 간 업무 분담 및 협업 설정 방법, 에이전트 간 핸드오프 구현 방법을 배웁니다.",
+        videoId: "multi-agent",
+        notes: "이 강의에서는 멀티 에이전트 시스템 아키텍처를 설계하는 방법과 에이전트 간 업무 분담 및 협업 설정 방법을 배웁니다. 에이전트 간 핸드오프를 구현하는 기술을 익히고, 여러 에이전트가 협업하는 고객 응대 시스템을 구축하는 실습을 진행합니다.",
+        resources: [
+          {
+            name: "멀티 에이전트 노트북",
+            type: "notebook",
+            size: "185KB",
+            url: "/notebooks/multi_agent.ipynb"
+          },
+          {
+            name: "에이전트 협업 코드",
+            type: "code",
+            size: "56KB",
+            url: "/code/agent_collaboration.py"
+          }
+        ]
+      },
+      {
+        id: 107,
+        title: "비즈니스 사례별 에이전트 솔루션 구현",
+        duration: "30:50",
+        description: "고객 서비스, 판매, 마케팅, 법률 등 다양한 분야별 에이전트 사례를 소개하고, 기업 데이터와 외부 도구 통합 방법 및 효과적인 비즈니스 에이전트 구축 팁을 배웁니다.",
+        videoId: "business-cases",
+        notes: "이 강의에서는 고객 서비스, 판매, 마케팅, 법률 등 다양한 분야별 에이전트 사례를 소개하고, 기업 데이터와 외부 도구를 통합하는 방법을 배웁니다. 효과적인 비즈니스 에이전트 구축을 위한 팁과 트릭을 익히고, 특정 산업 분야에 특화된 에이전트 프로젝트를 구현하는 실습을 진행합니다.",
+        resources: [
+          {
+            name: "비즈니스 사례 연구",
+            type: "document",
+            size: "520KB",
+            url: "/docs/business_cases.pdf"
+          },
+          {
+            name: "산업별 에이전트 코드",
+            type: "code",
+            size: "48KB",
+            url: "/code/industry_agents.py"
+          }
+        ]
+      },
+      {
+        id: 108,
+        title: "에이전트 배포 및 모니터링",
+        duration: "25:30",
+        description: "프로덕션 환경에서 에이전트 배포하기, 에이전트 성능 모니터링 및 개선 방법, 비용 효율적인 운영 전략과 스케일링 방법을 배웁니다.",
+        videoId: "deployment",
+        notes: "이 강의에서는 프로덕션 환경에서 에이전트를 배포하는 방법과 에이전트 성능을 모니터링하고 개선하는 방법을 배웁니다. 비용 효율적인 운영 전략과 스케일링 방법을 익히고, 배포 및 모니터링 시스템을 구축하는 실습을 진행합니다.",
+        resources: [
+          {
+            name: "배포 가이드",
+            type: "document",
+            size: "380KB",
+            url: "/docs/deployment_guide.pdf"
+          },
+          {
+            name: "모니터링 시스템 코드",
+            type: "code",
+            size: "36KB",
+            url: "/code/monitoring_system.py"
+          },
+          {
+            name: "스케일링 전략 노트북",
+            type: "notebook",
+            size: "142KB",
+            url: "/notebooks/scaling_strategies.ipynb"
           }
         ]
       }
@@ -667,10 +761,10 @@ const LectureDetail = () => {
                   />
                   <Box>
                     <Typography variant="subtitle1" sx={{ color: '#fff', fontWeight: 600 }}>
-                      {agentCourse.author}
+                      Jay Jung
                     </Typography>
                     <Typography variant="caption" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                      강사
+                      AI Mentor
                     </Typography>
                   </Box>
                 </Box>
@@ -695,24 +789,6 @@ const LectureDetail = () => {
                   </Typography>
                 </Box>
                 
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                    업로드 날짜
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: '#fff', fontWeight: 500 }}>
-                    {agentCourse.uploadDate}
-                  </Typography>
-                </Box>
-                
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-                  <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                    조회수
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: '#fff', fontWeight: 500 }}>
-                    {agentCourse.views}
-                  </Typography>
-                </Box>
-                
                 <Button
                   fullWidth
                   variant="outlined"
@@ -728,41 +804,6 @@ const LectureDetail = () => {
                   }}
                 >
                   강의 북마크
-                </Button>
-              </Box>
-            </Paper>
-            
-            {/* 커뮤니티 카드 */}
-            <Paper sx={{ 
-              bgcolor: 'rgba(15, 15, 15, 0.6)',
-              backdropFilter: 'blur(10px)',
-              border: '1px solid rgba(255, 215, 0, 0.1)',
-              borderRadius: '12px',
-              overflow: 'hidden'
-            }}>
-              <Box sx={{ p: 3 }}>
-                <Typography variant="h6" sx={{ color: '#FFD700', mb: 2, fontWeight: 600 }}>
-                  커뮤니티
-                </Typography>
-                
-                <Typography variant="body2" sx={{ color: 'rgba(255, 255, 255, 0.9)', mb: 3 }}>
-                  질문이 있으신가요? 다른 수강생들과 함께 토론하고 도움을 받아보세요.
-                </Typography>
-                
-                <Button
-                  fullWidth
-                  variant="contained"
-                  startIcon={<MdOutlineChat />}
-                  sx={{
-                    bgcolor: 'rgba(255, 255, 255, 0.1)',
-                    color: '#fff',
-                    '&:hover': {
-                      bgcolor: 'rgba(255, 255, 255, 0.2)',
-                    },
-                    py: 1
-                  }}
-                >
-                  토론방 입장하기
                 </Button>
               </Box>
             </Paper>
