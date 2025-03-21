@@ -99,23 +99,17 @@ const LectureDetail = () => {
       },
       {
         id: 102,
-        title: "Responses API 기초 다지기",
+        title: "Response API, OpenAI Agent, Cursor AI로 10분만에 월 매출 25억 개발하기",
         duration: "22:30",
-        description: "Responses API의 기본 개념과 기존 API와의 차이점을 알아보고, 간단한 코드로 첫 번째 에이전트를 만드는 방법을 배웁니다.",
+        description: "최신 OpenAI Response API와 Cursor AI를 활용하여 단기간에 고수익 비즈니스 AI 서비스를 개발하는 방법을 배웁니다. 실제 사례와 함께 빠르게 구현 가능한 AI 비즈니스 모델을 살펴봅니다.",
         videoId: "assistant-intro",
-        notes: "이 강의에서는 Responses API가 기존 API와 어떻게 다른지 비교하고, 코드 몇 줄로 첫 번째 에이전트를 만드는 방법을 배웁니다. API 호출 방식과 기본 구조를 이해하고, 간단한 질의응답 에이전트를 구현하는 실습을 진행합니다.",
+        notes: "이 강의에서는 Response API의 기본 개념과 기존 API와의 차이점을 알아보고, Cursor AI와 함께 활용하여 단시간에 개발 가능한 비즈니스 모델을 탐색합니다. 월 매출 25억을 달성한 실제 사례 분석과 함께 비즈니스 모델 구축 방법을 배웁니다.",
         resources: [
           {
-            name: "Responses API 가이드",
+            name: "Response API 실습 가이드",
             type: "document",
             size: "280KB",
-            url: "https://opct.blob.core.windows.net/lecture-openai-aiagent/agent_sdk_installation.pdf?sp=r&st=2025-03-17T08:32:59Z&se=2025-03-17T16:32:59Z&sv=2022-11-02&sr=b&sig=QsKL%2FBxkcCwicJTXSRY7hFRU6xCJimltg0YYXjn5l5g%3D"
-          },
-          {
-            name: "첫 에이전트 코드",
-            type: "code",
-            size: "12KB",
-            url: "https://opct.blob.core.windows.net/lecture-openai-aiagent/first_agent.py?sp=r&st=2025-03-17T08:32:59Z&se=2025-03-17T16:32:59Z&sv=2022-11-02&sr=b&sig=QsKL%2FBxkcCwicJTXSRY7hFRU6xCJimltg0YYXjn5l5g%3D"
+            url: "https://opct.blob.core.windows.net/lecture-openai-aiagent/2.ResponseAPI.ipynb?sp=r&st=2025-03-21T01:05:02Z&se=2030-03-21T09:05:02Z&spr=https&sv=2024-11-04&sr=b&sig=ifJKynM4oc39VUpfR2%2BwA7yLsGELnADM4ia6DTk7BQw%3D"
           }
         ]
       },
